@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
         primaryColor: AppColors.white,
         scaffoldBackgroundColor: AppColors.darkerGrey,
         textTheme: const TextTheme(
-          bodyMedium: TextStyle(fontFamily: 'Open Sans'),
+          bodyMedium:
+              TextStyle(fontFamily: 'Open Sans', color: AppColors.white),
         ),
       ),
       home: const Scaffold(
