@@ -3,6 +3,7 @@ import 'package:spotify_ui/shared/app_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_ui/shared/constants.dart';
 import 'package:spotify_ui/widgets/main_icon_button.dart';
+import 'package:spotify_ui/widgets/main_text_button.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,40 +55,18 @@ class MyApp extends StatelessWidget {
               SizedBox(
                 height: 18.0,
               ),
-              Row(
+              const Row(
                 children: [
-                  Container(
+                  MainTextButton(
+                    title: 'Música',
                     width: 90,
-                    decoration: BoxDecoration(
-                      color: AppColors.grey,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(50),
-                      ),
-                    ),
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Música',
-                          style: kMainButtonTextStyle,
-                        )),
                   ),
                   SizedBox(
                     width: 8.0,
                   ),
-                  Container(
+                  MainTextButton(
+                    title: 'Podcasts e programas',
                     width: 200,
-                    decoration: BoxDecoration(
-                      color: AppColors.grey,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(50),
-                      ),
-                    ),
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Podcasts e programas',
-                          style: kMainButtonTextStyle,
-                        )),
                   ),
                 ],
               ),
