@@ -9,7 +9,7 @@ const kMainButtonTextStyle = TextStyle(
 
 const kTitleTextStyle = TextStyle(
   fontFamily: 'Open Sans',
-  fontSize: 30.0,
+  fontSize: 25.0,
   fontWeight: FontWeight.w900,
 );
 

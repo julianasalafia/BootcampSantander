@@ -14,7 +14,7 @@ class MainIconButton extends StatelessWidget {
       onPressed: () {},
       icon: Icon(
         icon,
-        size: 25.0,
+        size: 20.0,
       ),
     );
   }
