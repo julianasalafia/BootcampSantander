@@ -164,7 +164,8 @@ class MyApp extends StatelessWidget {
                           ),
                           Text(
                             'Buscar',
-                            style: TextStyle(fontSize: 11.0),
+                            style: TextStyle(
+                                fontSize: 11.0, color: AppColors.lightGrey),
                           ),
                           SizedBox(height: 10.0),
                         ],
@@ -179,7 +180,8 @@ class MyApp extends StatelessWidget {
                           ),
                           Text(
                             'Sua Biblioteca',
-                            style: TextStyle(fontSize: 11.0),
+                            style: TextStyle(
+                                fontSize: 11.0, color: AppColors.lightGrey),
                           ),
                           SizedBox(height: 10.0),
                         ],
