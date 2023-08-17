@@ -27,98 +27,163 @@ class MyApp extends StatelessWidget {
         body: Padding(
           padding: EdgeInsets.only(right: 15.0, left: 15.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                height: 50.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
                 children: [
-                  Text(
-                    'Boa tarde',
-                    style: kTitleTextStyle,
+                  SizedBox(
+                    height: 50.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Boa tarde',
+                        style: kTitleTextStyle,
+                      ),
+                      Row(
+                        children: [
+                          MainIconButton(
+                            icon: FontAwesomeIcons.bell,
+                          ),
+                          MainIconButton(
+                            icon: FontAwesomeIcons.clock,
+                          ),
+                          MainIconButton(
+                            icon: FontAwesomeIcons.gear,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 18.0,
                   ),
                   Row(
                     children: [
-                      MainIconButton(
-                        icon: FontAwesomeIcons.bell,
+                      MainTextButton(
+                        title: 'Música',
+                        width: 90,
                       ),
-                      MainIconButton(
-                        icon: FontAwesomeIcons.clock,
+                      SizedBox(
+                        width: 8.0,
                       ),
-                      MainIconButton(
-                        icon: FontAwesomeIcons.gear,
+                      MainTextButton(
+                        title: 'Podcasts e programas',
+                        width: 200,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 18.0,
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          LastPlay(
+                              cover: 'assets/images/arianagrande.jpeg',
+                              title: 'This Is Ariana Grande'),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          LastPlay(
+                              cover: 'assets/images/macmiller.jpeg',
+                              title: 'This Is Mac \nMiller'),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        children: [
+                          LastPlay(
+                              cover: 'assets/images/mileycyrus.jpg',
+                              title: 'Plastic Hearts'),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          LastPlay(
+                              cover: 'assets/images/naoinviabilize.jpg',
+                              title: 'Não \nInviabilize'),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        children: [
+                          LastPlay(
+                              cover: 'assets/images/aishadee.jpg',
+                              title: 'SUITCASE'),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          LastPlay(
+                              cover: 'assets/images/spotify.jpg',
+                              title: 'Seus \nepisódios'),
+                        ],
                       ),
                     ],
                   ),
                 ],
-              ),
-              SizedBox(
-                height: 18.0,
-              ),
-              Row(
-                children: [
-                  MainTextButton(
-                    title: 'Música',
-                    width: 90,
-                  ),
-                  SizedBox(
-                    width: 8.0,
-                  ),
-                  MainTextButton(
-                    title: 'Podcasts e programas',
-                    width: 200,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 18.0,
               ),
               Column(
                 children: [
-                  Row(
-                    children: [
-                      LastPlay(
-                          cover: 'assets/images/arianagrande.jpeg',
-                          title: 'This Is Ariana Grande'),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      LastPlay(
-                          cover: 'assets/images/macmiller.jpeg',
-                          title: 'This Is Mac \nMiller'),
-                    ],
+                  Divider(
+                    height: 2,
+                    color: AppColors.white,
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 5,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      LastPlay(
-                          cover: 'assets/images/mileycyrus.jpg',
-                          title: 'Plastic Hearts'),
-                      SizedBox(
-                        width: 10.0,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MainIconButton(
+                              icon: FontAwesomeIcons.house,
+                              color: Colors.white),
+                          Text(
+                            'Início',
+                            style: TextStyle(fontSize: 11.0),
+                          ),
+                          SizedBox(height: 10.0),
+                        ],
                       ),
-                      LastPlay(
-                          cover: 'assets/images/naoinviabilize.jpg',
-                          title: 'Não \nInviabilize'),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Row(
-                    children: [
-                      LastPlay(
-                          cover: 'assets/images/aishadee.jpg',
-                          title: 'SUITCASE'),
-                      SizedBox(
-                        width: 10.0,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MainIconButton(
+                            icon: FontAwesomeIcons.magnifyingGlass,
+                            color: AppColors.lightGrey,
+                          ),
+                          Text(
+                            'Buscar',
+                            style: TextStyle(fontSize: 11.0),
+                          ),
+                          SizedBox(height: 10.0),
+                        ],
                       ),
-                      LastPlay(
-                          cover: 'assets/images/spotify.jpg',
-                          title: 'Seus \nepisódios'),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MainIconButton(
+                            icon: FontAwesomeIcons.gripLinesVertical,
+                            color: AppColors.lightGrey,
+                          ),
+                          Text(
+                            'Sua Biblioteca',
+                            style: TextStyle(fontSize: 11.0),
+                          ),
+                          SizedBox(height: 10.0),
+                        ],
+                      ),
                     ],
                   ),
                 ],
