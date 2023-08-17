@@ -86,7 +86,39 @@ class MyApp extends StatelessWidget {
                       ),
                       LastPlay(
                           cover: 'assets/images/macmiller.jpeg',
-                          title: 'This Is Mac Miller'),
+                          title: 'This Is Mac \nMiller'),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Row(
+                    children: [
+                      LastPlay(
+                          cover: 'assets/images/mileycyrus.jpg',
+                          title: 'Plastic Hearts'),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      LastPlay(
+                          cover: 'assets/images/naoinviabilize.jpg',
+                          title: 'Não \nInviabilize'),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Row(
+                    children: [
+                      LastPlay(
+                          cover: 'assets/images/aishadee.jpg',
+                          title: 'SUITCASE'),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      LastPlay(
+                          cover: 'assets/images/spotify.jpg',
+                          title: 'Seus \nepisódios'),
                     ],
                   ),
                 ],

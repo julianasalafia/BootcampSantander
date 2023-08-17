@@ -17,7 +17,7 @@ class LastPlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: 80.0,
+        height: 50.0,
         decoration: BoxDecoration(
           color: AppColors.grey,
           borderRadius: BorderRadius.circular(5.0),
