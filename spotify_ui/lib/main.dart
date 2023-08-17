@@ -19,17 +19,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         primaryColor: AppColors.white,
         scaffoldBackgroundColor: AppColors.darkerGrey,
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           bodyMedium: TextStyle(fontFamily: 'Open Sans'),
         ),
       ),
       home: const Scaffold(
         body: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.only(right: 15.0, left: 15.0),
           child: Column(
             children: [
               SizedBox(
-                height: 75.0,
+                height: 50.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

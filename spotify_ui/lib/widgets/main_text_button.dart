@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../shared/app_colors.dart';
 import '../shared/constants.dart';
 
+const double height = 35;
+
 class MainTextButton extends StatelessWidget {
   const MainTextButton({
     super.key,
@@ -17,7 +19,8 @@ class MainTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      decoration: BoxDecoration(
+      height: height,
+      decoration: const BoxDecoration(
         color: AppColors.grey,
         borderRadius: BorderRadius.all(
           Radius.circular(50),
