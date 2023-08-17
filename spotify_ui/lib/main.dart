@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spotify_ui/shared/app_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_ui/shared/constants.dart';
+import 'package:spotify_ui/widgets/main_icon_button.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,39 +29,23 @@ class MyApp extends StatelessWidget {
               SizedBox(
                 height: 75.0,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Boa tarde',
-                    style: TextStyle(
-                      fontFamily: 'Open Sans',
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: kTitleTextStyle,
                   ),
                   Row(
                     children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.bell,
-                          size: 25.0,
-                        ),
+                      MainIconButton(
+                        icon: FontAwesomeIcons.bell,
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.clock,
-                          size: 25.0,
-                        ),
+                      MainIconButton(
+                        icon: FontAwesomeIcons.clock,
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.gear,
-                          size: 25.0,
-                        ),
+                      MainIconButton(
+                        icon: FontAwesomeIcons.gear,
                       ),
                     ],
                   ),
