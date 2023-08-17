@@ -79,14 +79,14 @@ class MyApp extends StatelessWidget {
                   Row(
                     children: [
                       LastPlay(
-                        cover: 'assets/images/arianagrande.jpeg',
-                        title: 'This is Ariana \nGrande',
+                          cover: 'assets/images/arianagrande.jpeg',
+                          title: 'This Is Ariana Grande'),
+                      SizedBox(
+                        width: 10.0,
                       ),
-                      SizedBox(width: 8.0),
                       LastPlay(
-                        cover: 'assets/images/macmiller.jpeg',
-                        title: 'This is Mac \nMiller',
-                      ),
+                          cover: 'assets/images/macmiller.jpeg',
+                          title: 'This Is Mac Miller'),
                     ],
                   ),
                 ],

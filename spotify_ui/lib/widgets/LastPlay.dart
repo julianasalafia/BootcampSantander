@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../shared/app_colors.dart';
+import '../shared/constants.dart';
 
 class LastPlay extends StatelessWidget {
   const LastPlay({
@@ -15,30 +16,31 @@ class LastPlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Row(
-        children: [
-          Image.asset(
-            cover,
-            height: 75,
-          ),
-          Container(
-            height: 75,
-            color: AppColors.grey,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontFamily: 'Open Sans',
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
+      child: Container(
+        height: 80.0,
+        decoration: BoxDecoration(
+          color: AppColors.grey,
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(5.0),
+                    bottomLeft: Radius.circular(5.0)),
+                child: Image.asset(cover)),
+            const SizedBox(
+              width: 8.0,
+            ),
+            Expanded(
+              child: Text(
+                title,
+                maxLines: 2,
+                style: kWidgetTextStyle,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
