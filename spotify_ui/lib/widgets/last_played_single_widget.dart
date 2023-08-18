@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../shared/app_colors.dart';
 import '../shared/constants.dart';
 
-class LastPlay extends StatelessWidget {
-  const LastPlay({
+class LastPlayedSingleWidget extends StatelessWidget {
+  const LastPlayedSingleWidget({
     super.key,
     required this.cover,
     required this.title,
