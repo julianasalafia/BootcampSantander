@@ -3,7 +3,6 @@ import 'package:spotify_ui/shared/app_colors.dart';
 import 'package:spotify_ui/widgets/header_widget.dart';
 import 'package:spotify_ui/widgets/bottom_menu.dart';
 import 'package:spotify_ui/widgets/last_played_widget.dart';
-import 'package:spotify_ui/widgets/main_text_button.dart';
 import 'package:spotify_ui/widgets/now_playing_widget.dart';
 import 'package:spotify_ui/widgets/selector_widget.dart';
 
