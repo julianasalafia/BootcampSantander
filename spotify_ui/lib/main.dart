@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_ui/shared/app_colors.dart';
+import 'package:spotify_ui/shared/constants.dart';
 import 'package:spotify_ui/widgets/header_widget.dart';
 import 'package:spotify_ui/widgets/bottom_menu.dart';
 import 'package:spotify_ui/widgets/last_played_widget.dart';
 import 'package:spotify_ui/widgets/now_playing_widget.dart';
 import 'package:spotify_ui/widgets/selector_widget.dart';
+import 'package:spotify_ui/widgets/similar_to_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,6 +46,9 @@ class MyApp extends StatelessWidget {
                     height: 18.0,
                   ),
                   LastPlayedWidget(),
+                  SizedBox(height: 25.0),
+                  SimilarToWidget(),
+                  SizedBox(height: 25.0),
                 ],
               ),
             ),
