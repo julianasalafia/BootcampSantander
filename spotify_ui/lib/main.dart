@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
                   LastPlayedWidget(),
                   SizedBox(height: 25.0),
                   SimilarToWidget(),
-                  SizedBox(height: 25.0),
                 ],
               ),
             ),
