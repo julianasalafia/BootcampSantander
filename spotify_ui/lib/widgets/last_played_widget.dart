@@ -20,7 +20,7 @@ class LastPlayedWidget extends StatelessWidget {
               width: 10.0,
             ),
             LastPlayedSingleWidget(
-                cover: 'assets/images/macmiller.jpeg',
+                cover: 'assets/images/macmiller.jpg',
                 title: 'This Is Mac \nMiller'),
           ],
         ),
