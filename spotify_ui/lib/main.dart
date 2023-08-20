@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_ui/shared/app_colors.dart';
-import 'package:spotify_ui/shared/constants.dart';
 import 'package:spotify_ui/widgets/header_widget.dart';
 import 'package:spotify_ui/widgets/bottom_menu.dart';
 import 'package:spotify_ui/widgets/last_played_widget.dart';
