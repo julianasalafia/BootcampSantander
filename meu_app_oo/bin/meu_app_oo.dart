@@ -8,4 +8,7 @@ void main(List<String> arguments) {
 
   print(p1.getNome());
   print(p1.getEndereco());
+
+  //sobrescrita
+  print(p1);
 }
