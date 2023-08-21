@@ -1,4 +1,4 @@
-import 'package:meu_app_oo/classes/Pessoa.dart';
+import 'package:meu_app_oo/classes/pessoa.dart';
 
 class PessoaJuridica extends Pessoa {
   String? _cnpj;
