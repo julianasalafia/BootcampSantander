@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:meu_app_exceptions/exception/nome_invalido_exception.dart';
