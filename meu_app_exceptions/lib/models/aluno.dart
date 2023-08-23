@@ -1,10 +1,8 @@
 class Aluno {
   String _nome = "";
-  List<double> _notas = [];
+  final List<double> _notas = [];
 
-  Aluno(String nome) {
-    _nome = nome;
-  }
+  Aluno(this._nome);
 
   void setNome(String nome) {
     _nome = nome;
@@ -23,11 +21,8 @@ class Aluno {
   }
 
   double retornaMedia() {
-    var totalNotas = 0.0;
-    for (var nota in _notas) {
-      totalNotas = totalNotas + nota;
-    }
-    var media = totalNotas / _notas.length;
+    var media =
+        _notas.reduce((value, element) => value + element) / _notas.length;
     return media.isNaN ? 0 : media;
   }
 
