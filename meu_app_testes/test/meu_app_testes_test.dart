@@ -57,4 +57,24 @@ void main() {
       });
     }
   });
+
+  test('testa conversão para uppercase', () {
+    expect(app.convertToUpper('dio'), equals('DIO'));
+  });
+
+  test('testa conversão para uppercase test 2', () {
+    expect(app.convertToUpper('dio'), equalsIgnoringCase('dio'));
+  });
+
+  test('valor maior ou igual a 50', () {
+    expect(app.retornaValor(50), greaterThanOrEqualTo(50));
+  });
+
+  test('começa com...', () {
+    expect(app.convertToUpper('dio'), startsWith('D'));
+  });
+
+  test('valor diferente', () {
+    expect(app.retornaValor(50), isNot(equals(49)));
+  });
 }
