@@ -35,8 +35,10 @@ TextStyle kBorderTextStyle = TextStyle(
     ..color = AppColors.vinho,
 );
 
-TextField buildTextField({required String hintText}) {
+TextField buildTextField(
+    {required TextEditingController controller, required String hintText}) {
   return TextField(
+    controller: controller,
     decoration: InputDecoration(
       hintText: hintText,
       border: buildOutlineInputBorder(),

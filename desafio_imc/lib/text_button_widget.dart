@@ -2,11 +2,19 @@ import 'package:desafio_imc/shared/app_colors.dart';
 import 'package:desafio_imc/shared/constants.dart';
 import 'package:flutter/material.dart';
 
-class TextButtonWidget extends StatelessWidget {
+class TextButtonWidget extends StatefulWidget {
   const TextButtonWidget({
     super.key,
+    required this.onPressed,
   });
 
+  final void Function() onPressed;
+
+  @override
+  State<TextButtonWidget> createState() => _TextButtonWidgetState();
+}
+
+class _TextButtonWidgetState extends State<TextButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +25,7 @@ class TextButtonWidget extends StatelessWidget {
         border: Border.all(color: AppColors.vinho, width: 3),
       ),
       child: TextButton(
-        onPressed: () {},
+        onPressed: widget.onPressed,
         child: Stack(
           children: [
             Text(

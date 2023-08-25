@@ -13,6 +13,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final nomeController = TextEditingController();
+    final pesoController = TextEditingController();
+    final alturaController = TextEditingController();
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: AppColors.rosa,
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
               children: [
                 const HeaderWidget(),
                 const SizedBox(height: height),
-                buildTextField(hintText: 'nome'),
+                buildTextField(hintText: 'nome', controller: nomeController),
                 const SizedBox(height: height),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -37,7 +41,8 @@ class MyApp extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          buildTextField(hintText: 'peso'),
+                          buildTextField(
+                              hintText: 'peso', controller: pesoController),
                         ],
                       ),
                     ),
@@ -45,14 +50,23 @@ class MyApp extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          buildTextField(hintText: 'altura'),
+                          buildTextField(
+                              hintText: 'altura', controller: alturaController),
                         ],
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: height),
-                const TextButtonWidget(),
+                TextButtonWidget(
+                  onPressed: () {
+                    String nome = nomeController.text;
+                    String peso = pesoController.text;
+                    String altura = alturaController.text;
+
+                    print("$nome, $peso, $altura");
+                  },
+                ),
               ],
             ),
           ),
