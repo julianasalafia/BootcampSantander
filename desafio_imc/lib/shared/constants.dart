@@ -17,6 +17,21 @@ const kTextStyle = TextStyle(
   color: AppColors.vinho,
 );
 
+const kTextTitleResultStyle = TextStyle(
+  fontFamily: 'Modak',
+  fontSize: 50.0,
+  color: AppColors.rosaDuo,
+);
+
+TextStyle kTextTitleResultBorderStyle = TextStyle(
+  fontFamily: 'Modak',
+  fontSize: 50.0,
+  foreground: Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 2
+    ..color = AppColors.vinho,
+);
+
 TextStyle kBorderTitleStyle = TextStyle(
   fontFamily: 'Modak',
   fontSize: 80.0,
