@@ -17,10 +17,25 @@ const kTextStyle = TextStyle(
   color: AppColors.vinho,
 );
 
+const kResultTextStyle = TextStyle(
+  fontFamily: 'Modak',
+  fontSize: 30.0,
+  color: AppColors.rosaTrio,
+);
+
 const kTextTitleResultStyle = TextStyle(
   fontFamily: 'Modak',
   fontSize: 50.0,
   color: AppColors.rosaDuo,
+);
+
+TextStyle kResultTextStyleBorderStyle = TextStyle(
+  fontFamily: 'Modak',
+  fontSize: 30.0,
+  foreground: Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1
+    ..color = AppColors.vinho,
 );
 
 TextStyle kTextTitleResultBorderStyle = TextStyle(

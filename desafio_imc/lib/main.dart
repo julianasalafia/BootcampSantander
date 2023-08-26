@@ -17,7 +17,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String imcText = 'IMC: 0.0';
+  String imcText = '';
+  String result = '';
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _MyAppState extends State<MyApp> {
           elevation: 0,
         ),
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 15.0),
+          padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 15.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,6 +77,7 @@ class _MyAppState extends State<MyApp> {
                     double imc = calculateIMC(pessoa.peso, pessoa.altura);
                     setState(() {
                       imcText = 'IMC: ${imc.toStringAsFixed(1)}';
+                      result = returnIMCCategory(imc);
                     });
                   },
                 ),
@@ -95,6 +97,18 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ],
                 ),
+                Stack(
+                  children: [
+                    Text(
+                      result.toUpperCase(),
+                      style: kResultTextStyle,
+                    ),
+                    Text(
+                      result.toUpperCase(),
+                      style: kResultTextStyleBorderStyle,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -106,5 +120,39 @@ class _MyAppState extends State<MyApp> {
   double calculateIMC(double? peso, double? altura) {
     double alturaEmMetros = altura! / 100;
     return peso! / (alturaEmMetros! * alturaEmMetros);
+  }
+
+  String returnIMCCategory(double imc) {
+    if (imc < 16) {
+      return 'magreza grave';
+    }
+
+    if (imc >= 16 && imc < 17) {
+      return 'magreza moderada';
+    }
+
+    if (imc >= 17 && imc < 18.5) {
+      return 'magreza leve';
+    }
+
+    if (imc >= 18.5 && imc < 25) {
+      return 'saudável';
+    }
+
+    if (imc >= 25 && imc < 30) {
+      return 'sobrepeso';
+    }
+
+    if (imc >= 30 && imc < 35) {
+      return 'obesidade grau I';
+    }
+    if (imc >= 35 && imc < 40) {
+      return 'obesidade grau II';
+    }
+
+    if (imc >= 40) {
+      return 'obesidade grau III';
+    }
+    return '';
   }
 }
