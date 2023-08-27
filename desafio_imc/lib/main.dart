@@ -19,6 +19,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String imcText = '';
   String result = '';
+  late String nome;
+  double? peso;
+  double? altura;
   late CategoriaIMC categoria;
   late TextEditingController nomeController;
   late TextEditingController pesoController;
@@ -77,18 +80,22 @@ class _MyAppState extends State<MyApp> {
                 const SizedBox(height: height),
                 TextButtonWidget(
                   onPressed: () {
-                    String nome = nomeController.text;
-                    double? peso = double.parse(pesoController.text);
-                    double? altura = double.parse(alturaController.text);
+                    try {
+                      nome = nomeController.text;
+                      peso = double.parse(pesoController.text);
+                      altura = double.parse(alturaController.text);
 
-                    Pessoa pessoa = Pessoa(nome, peso, altura);
+                      Pessoa pessoa = Pessoa(nome, peso, altura);
 
-                    double imc = calculateIMC(pessoa.peso, pessoa.altura);
-                    setState(() {
-                      imcText = 'IMC: ${imc.toStringAsFixed(1)}';
-                      categoria = getCategoriaIMC(imc);
-                      result = getDescricaoCategoriaIMC(categoria);
-                    });
+                      double imc = calculateIMC(pessoa.peso, pessoa.altura);
+                      setState(() {
+                        imcText = 'IMC: ${imc.toStringAsFixed(1)}';
+                        categoria = getCategoriaIMC(imc);
+                        result = getDescricaoCategoriaIMC(categoria);
+                      });
+                    } catch (exception) {
+                      print('Por favor, digite valores válidos.');
+                    }
                   },
                 ),
                 const SizedBox(height: height),
