@@ -19,13 +19,21 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String imcText = '';
   String result = '';
+  late CategoriaIMC categoria;
+  late TextEditingController nomeController;
+  late TextEditingController pesoController;
+  late TextEditingController alturaController;
+
+  @override
+  void initState() {
+    super.initState();
+    nomeController = TextEditingController();
+    pesoController = TextEditingController();
+    alturaController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final nomeController = TextEditingController();
-    final pesoController = TextEditingController();
-    final alturaController = TextEditingController();
-
     return MaterialApp(
       home: Scaffold(
         backgroundColor: AppColors.rosa,
@@ -74,10 +82,12 @@ class _MyAppState extends State<MyApp> {
                     double? altura = double.parse(alturaController.text);
 
                     Pessoa pessoa = Pessoa(nome, peso, altura);
+
                     double imc = calculateIMC(pessoa.peso, pessoa.altura);
                     setState(() {
                       imcText = 'IMC: ${imc.toStringAsFixed(1)}';
-                      result = returnIMCCategory(imc);
+                      categoria = getCategoriaIMC(imc);
+                      result = getDescricaoCategoriaIMC(categoria);
                     });
                   },
                 ),
@@ -122,37 +132,46 @@ class _MyAppState extends State<MyApp> {
     return peso! / (alturaEmMetros! * alturaEmMetros);
   }
 
-  String returnIMCCategory(double imc) {
+  CategoriaIMC getCategoriaIMC(double imc) {
     if (imc < 16) {
-      return 'magreza grave';
+      return CategoriaIMC.magrezaGrave;
+    } else if (imc < 17) {
+      return CategoriaIMC.magrezaModerada;
+    } else if (imc < 18.5) {
+      return CategoriaIMC.magrezaLeve;
+    } else if (imc < 25) {
+      return CategoriaIMC.saudavel;
+    } else if (imc < 30) {
+      return CategoriaIMC.sobrepeso;
+    } else if (imc < 35) {
+      return CategoriaIMC.obesidadeGrauI;
+    } else if (imc < 40) {
+      return CategoriaIMC.obesidadeGrauII;
+    } else {
+      return CategoriaIMC.obesidadeGrauIII;
     }
+  }
 
-    if (imc >= 16 && imc < 17) {
-      return 'magreza moderada';
+  String getDescricaoCategoriaIMC(CategoriaIMC categoria) {
+    switch (categoria) {
+      case CategoriaIMC.magrezaGrave:
+        return 'magreza grave';
+      case CategoriaIMC.magrezaModerada:
+        return 'magreza moderada';
+      case CategoriaIMC.magrezaLeve:
+        return 'magreza leve';
+      case CategoriaIMC.saudavel:
+        return 'saudável';
+      case CategoriaIMC.sobrepeso:
+        return 'sobrepeso';
+      case CategoriaIMC.obesidadeGrauI:
+        return 'obesidade grau I';
+      case CategoriaIMC.obesidadeGrauII:
+        return 'obesidade grau II';
+      case CategoriaIMC.obesidadeGrauIII:
+        return 'obesidade grau III';
+      default:
+        throw ArgumentError('Categoria inválida');
     }
-
-    if (imc >= 17 && imc < 18.5) {
-      return 'magreza leve';
-    }
-
-    if (imc >= 18.5 && imc < 25) {
-      return 'saudável';
-    }
-
-    if (imc >= 25 && imc < 30) {
-      return 'sobrepeso';
-    }
-
-    if (imc >= 30 && imc < 35) {
-      return 'obesidade grau I';
-    }
-    if (imc >= 35 && imc < 40) {
-      return 'obesidade grau II';
-    }
-
-    if (imc >= 40) {
-      return 'obesidade grau III';
-    }
-    return '';
   }
 }

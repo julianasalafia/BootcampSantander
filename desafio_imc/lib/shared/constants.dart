@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
+enum CategoriaIMC {
+  magrezaGrave,
+  magrezaModerada,
+  magrezaLeve,
+  saudavel,
+  sobrepeso,
+  obesidadeGrauI,
+  obesidadeGrauII,
+  obesidadeGrauIII
+}
+
 const height = 10.0;
 const width = 15.0;
 
