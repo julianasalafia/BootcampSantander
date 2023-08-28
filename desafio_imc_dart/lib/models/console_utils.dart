@@ -2,18 +2,38 @@ import 'dart:convert';
 import 'dart:io';
 
 class ConsoleUtils {
-  static String lerString(String texto) {
+  static String ler(String texto) {
     stdout.write(texto);
     return stdin.readLineSync(encoding: utf8) ?? "";
   }
 
-  static double? lerDouble(String texto) {
-    var valor = lerString(texto);
+  static String lerString(String texto) {
+    String valor;
 
-    try {
-      return double.parse(valor);
-    } catch (e) {
-      return null;
+    do {
+      String input = ler(texto);
+      valor = input;
+
+      if (!valor.contains(RegExp(r'^[a-zA-Z\s]+$'))) {
+        print('Error: Por favor, digite um nome válido.');
+      }
+    } while (!valor.contains(RegExp(r'^[a-zA-Z\s]+$')));
+
+    return valor;
+  }
+
+  static double lerDouble(String texto) {
+    double? valor;
+
+    while (true) {
+      String? input = ler(texto);
+      valor = double.tryParse(input);
+
+      if (valor != null && valor >= 0) {
+        return valor;
+      } else {
+        print('Erro: por favor, digite um número válido.');
+      }
     }
   }
 }
