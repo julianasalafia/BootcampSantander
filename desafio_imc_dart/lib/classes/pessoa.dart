@@ -1,4 +1,4 @@
-abstract class Pessoa {
+class Pessoa {
   String? _nome;
   double? _peso;
   double? _altura;
@@ -26,6 +26,8 @@ abstract class Pessoa {
   double? getAltura() {
     return _altura!;
   }
+
+  Pessoa(String nome, double peso, double altura);
 
   @override
   String toString() {
