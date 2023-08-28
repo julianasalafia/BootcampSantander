@@ -21,8 +21,10 @@ void execute() {
 }
 
 double calculaIMC(Pessoa pessoa) {
-  double alturaMetros = pessoa.getAltura()! / 100;
-  return pessoa.getPeso()! / (alturaMetros * alturaMetros);
+  double? alturaMetros = pessoa.getAltura();
+
+  alturaMetros /= 100;
+  return pessoa.getPeso() / (alturaMetros * alturaMetros);
 }
 
 String getCategoria(double imc) {
