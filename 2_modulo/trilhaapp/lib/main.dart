@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,10 +27,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var numeroGerado = 0;
+
+  int _gerarNumeroAleatorio() {
+    Random numeroAleatorio = Random();
+    return numeroAleatorio.nextInt(1000);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Meu app')),
+      appBar: AppBar(
+        title: const Text('Meu app'),
+      ),
+      body: Center(
+          child: Text(
+        numeroGerado.toString(),
+        style: const TextStyle(fontSize: 50),
+      )),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.cached),
+        onPressed: () {
+          setState(() {
+            numeroGerado = _gerarNumeroAleatorio();
+          });
+
+          print(numeroGerado);
+        },
+      ),
     );
   }
 }
