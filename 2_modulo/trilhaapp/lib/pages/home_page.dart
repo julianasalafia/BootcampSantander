@@ -41,6 +41,32 @@ class _HomePageState extends State<HomePage> {
               'O número gerado foi $numeroGerado',
               style: const TextStyle(fontSize: 30),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  color: Colors.red,
+                  child: Text(
+                    '10',
+                    style: const TextStyle(fontSize: 30),
+                  ),
+                ),
+                Container(
+                  color: Colors.blue,
+                  child: Text(
+                    '20',
+                    style: const TextStyle(fontSize: 30),
+                  ),
+                ),
+                Container(
+                  color: Colors.green,
+                  child: Text(
+                    '30',
+                    style: const TextStyle(fontSize: 30),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
