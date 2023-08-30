@@ -8,6 +8,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String email = "";
+  String senha = "";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,7 +59,10 @@ class _LoginPageState extends State<LoginPage> {
                   height: 30,
                   width: double.infinity,
                   child: TextField(
-                    style: TextStyle(color: Colors.white),
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(top: 0),
                       hintText: 'Email',
@@ -83,7 +89,10 @@ class _LoginPageState extends State<LoginPage> {
                   height: 30,
                   width: double.infinity,
                   child: TextField(
-                    style: TextStyle(color: Colors.white),
+                    onChanged: (value) {
+                      senha = value;
+                    },
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(top: 0),
                       enabledBorder: UnderlineInputBorder(
@@ -113,7 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: SizedBox(
                     width: double.infinity,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print(email);
+                        print(senha);
+                      },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
