@@ -29,43 +29,74 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              'Ações do usuário',
-              style: const TextStyle(fontSize: 15),
-            ),
-            Text(
-              'Foi clicado $quantidadeCliques vezes',
-              style: const TextStyle(fontSize: 15),
-            ),
-            Text(
-              'O número gerado foi $numeroGerado',
-              style: const TextStyle(fontSize: 30),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  color: Colors.red,
-                  child: Text(
-                    '10',
-                    style: const TextStyle(fontSize: 30),
-                  ),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                color: Colors.cyan,
+                child: Text(
+                  'Ações do usuário',
+                  style: const TextStyle(fontSize: 15),
                 ),
-                Container(
-                  color: Colors.blue,
-                  child: Text(
-                    '20',
-                    style: const TextStyle(fontSize: 30),
-                  ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                width: double.infinity,
+                color: Colors.orange,
+                child: Text(
+                  'Foi clicado $quantidadeCliques vezes',
+                  style: const TextStyle(fontSize: 15),
                 ),
-                Container(
-                  color: Colors.green,
-                  child: Text(
-                    '30',
-                    style: const TextStyle(fontSize: 30),
-                  ),
+              ),
+            ),
+            Container(
+              color: Colors.indigo,
+              width: double.infinity,
+              child: Text(
+                'O número gerado foi $numeroGerado',
+                style: const TextStyle(fontSize: 15),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                color: Colors.grey,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        color: Colors.red,
+                        child: Text(
+                          'Nome:',
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        color: Colors.blue,
+                        child: Text(
+                          'Juliana Salafia',
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        color: Colors.green,
+                        child: Text(
+                          '30',
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),
