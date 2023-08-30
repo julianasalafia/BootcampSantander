@@ -29,20 +29,19 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                color: Colors.cyan,
-                child: Text(
-                  'Ações do usuário',
-                  style: const TextStyle(fontSize: 15),
-                ),
+            Container(
+              width: 200,
+              height: 200,
+              color: Colors.cyan,
+              child: Text(
+                'Ações do usuário',
+                style: const TextStyle(fontSize: 15),
               ),
             ),
-            Expanded(
-              flex: 3,
+            SizedBox(
+              width: 100,
+              height: 100,
               child: Container(
-                width: double.infinity,
                 color: Colors.orange,
                 child: Text(
                   'Foi clicado $quantidadeCliques vezes',
