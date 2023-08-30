@@ -10,6 +10,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String email = "";
   String senha = "";
+  bool isObscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 30,
                   width: double.infinity,
                   child: TextField(
+                    obscureText: isObscureText,
                     onChanged: (value) {
                       senha = value;
                     },
@@ -107,9 +109,18 @@ class _LoginPageState extends State<LoginPage> {
                         Icons.lock,
                         color: Colors.deepPurple[500],
                       ),
-                      suffixIcon: Icon(
-                        Icons.visibility,
-                        color: Colors.white,
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          setState(() {
+                            isObscureText = !isObscureText;
+                          });
+                        },
+                        child: Icon(
+                          isObscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
