@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.w600,
                     color: Colors.white),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               const Text(
                 'Faça seu login e make the change._',
                 style: TextStyle(
@@ -46,13 +46,13 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.white70,
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
                 height: 30,
                 width: double.infinity,
-                child: Row(
+                child: const Row(
                   children: [
                     Expanded(
                       flex: 2,
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
                 height: 30,
                 width: double.infinity,
                 child: const Row(
@@ -106,19 +106,37 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 30),
               Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 30),
-                color: Colors.green,
-                height: 30,
+                margin: const EdgeInsets.symmetric(horizontal: 30),
                 width: double.infinity,
-                child: Text('Login'),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.deepPurple[500])),
+                    child: const Text(
+                      'ENTRAR',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
               ),
               Expanded(child: Container()),
               Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
                 height: 30,
                 width: double.infinity,
-                child: Text(
+                child: const Text(
                   'Esqueci minha senha',
                   style: TextStyle(
                     fontSize: 15,
@@ -129,10 +147,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
                 height: 30,
                 width: double.infinity,
-                child: Text(
+                child: const Text(
                   'Criar conta',
                   style: TextStyle(
                     fontSize: 15,
