@@ -52,55 +52,52 @@ class _LoginPageState extends State<LoginPage> {
                 margin: const EdgeInsets.symmetric(horizontal: 30),
                 height: 30,
                 width: double.infinity,
-                child: const Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Informe seu email:',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 0),
+                    hintText: 'Email',
+                    hintStyle: TextStyle(color: Colors.white),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.deepPurple[500]!),
                     ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        'email@email.com',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.deepPurple[500]!),
                     ),
-                  ],
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.deepPurple[500],
+                    ),
+                  ),
                 ),
+              ),
+              const SizedBox(
+                height: 15,
               ),
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.symmetric(horizontal: 30),
                 height: 30,
                 width: double.infinity,
-                child: const Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Informe a senha:',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 0),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.deepPurple[500]!),
                     ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        '**********',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.deepPurple[500]!),
                     ),
-                  ],
+                    hintText: 'Senha',
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.deepPurple[500],
+                    ),
+                    suffixIcon: Icon(
+                      Icons.visibility,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 30),
