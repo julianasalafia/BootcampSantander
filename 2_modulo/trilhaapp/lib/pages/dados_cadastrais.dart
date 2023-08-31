@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp/repositories/nivel_repository.dart';
 
+import '../repositories/linguagens_repository.dart';
 import '../shared/widgets/text_label.dart';
 
 class DadosCadastraisPage extends StatefulWidget {
@@ -15,12 +16,16 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
   var dataNascimentoController = TextEditingController(text: '');
   DateTime? dataNascimento;
   var nivelRepository = NivelRepository();
+  var linguagensRepository = LinguagensRepository();
   var niveis = [];
+  var linguagens = [];
   var nivelSelecionado = '';
+  var linguagensSelecionadas = [];
 
   @override
   void initState() {
     niveis = nivelRepository.retornaNiveis();
+    linguagens = linguagensRepository.retornaLinguagens();
     super.initState();
   }
 
@@ -32,8 +37,7 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             const TextLabel(texto: 'Nome'),
             TextField(
@@ -74,6 +78,25 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
                       },
                     ),
                   )
+                  .toList(),
+            ),
+            TextLabel(texto: 'Linguagens preferidas'),
+            Column(
+              children: linguagens
+                  .map((linguagem) => CheckboxListTile(
+                      title: Text(linguagem),
+                      value: linguagensSelecionadas.contains(linguagem),
+                      onChanged: (bool? value) {
+                        if (value!) {
+                          setState(() {
+                            linguagensSelecionadas.add(linguagem);
+                          });
+                        } else {
+                          setState(() {
+                            linguagensSelecionadas.remove(linguagem);
+                          });
+                        }
+                      }))
                   .toList(),
             ),
             TextButton(
