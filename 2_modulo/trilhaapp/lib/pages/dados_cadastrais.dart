@@ -22,12 +22,26 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
   var nivelSelecionado = '';
   var linguagensSelecionadas = [];
   double salarioEscolhido = 0;
+  int tempoExperiencia = 0;
 
   @override
   void initState() {
     niveis = nivelRepository.retornaNiveis();
     linguagens = linguagensRepository.retornaLinguagens();
     super.initState();
+  }
+
+  List<DropdownMenuItem<int>> returnItens(int quantidadeMaxima) {
+    var itens = <DropdownMenuItem<int>>[];
+    for (var i = 0; i <= quantidadeMaxima; i++) {
+      itens.add(
+        DropdownMenuItem(
+          child: Text(i.toString()),
+          value: i,
+        ),
+      );
+    }
+    return itens;
   }
 
   @override
@@ -100,9 +114,19 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
                       }))
                   .toList(),
             ),
+            TextLabel(texto: 'Tempo de experiência'),
+            DropdownButton(
+                value: tempoExperiencia,
+                isExpanded: true,
+                items: returnItens(50),
+                onChanged: (value) {
+                  setState(() {
+                    tempoExperiencia = int.parse(value.toString());
+                  });
+                }),
             TextLabel(
                 texto:
-                    'Pretensão salarial. R\$${salarioEscolhido.round().toString()}.'),
+                    'Pretensão salarial: R\$${salarioEscolhido.round().toString()}.'),
             Slider(
                 min: 0,
                 max: 10000,
@@ -116,6 +140,10 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
                 onPressed: () {
                   print(nomeController.text);
                   print(dataNascimento);
+                  print(tempoExperiencia);
+                  print(salarioEscolhido);
+                  print(linguagensSelecionadas);
+                  print(nivelSelecionado);
                 },
                 child: Text('Salvar')),
           ],
