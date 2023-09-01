@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp/pages/login_page.dart';
 
 import '../../pages/dados_cadastrais.dart';
 
@@ -128,6 +129,59 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 )),
             onTap: () {},
+          ),
+          Divider(),
+          SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Icon(Icons.exit_to_app),
+                    SizedBox(width: 10),
+                    Text('Sair'),
+                  ],
+                )),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext bc) {
+                    return AlertDialog(
+                      alignment: Alignment.centerLeft,
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      title: Text(
+                        'Meu app',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      content: Wrap(
+                        children: [
+                          Text('Você sairá do aplicativo!'),
+                          Text('Deseja realmente sair?'),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('Não')),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                            },
+                            child: Text('Sim')),
+                      ],
+                    );
+                  });
+            },
           ),
         ],
       ),
