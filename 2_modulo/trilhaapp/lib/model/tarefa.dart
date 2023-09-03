@@ -15,8 +15,8 @@ class Tarefa {
     return _descricao;
   }
 
-  String getConcluido() {
-    return _descricao;
+  bool getConcluido() {
+    return _concluido;
   }
 
   void setDescricao(String descricao) {
