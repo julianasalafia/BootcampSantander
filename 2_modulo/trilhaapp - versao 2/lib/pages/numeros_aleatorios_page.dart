@@ -11,7 +11,27 @@ class NumerosAleatoriosPage extends StatefulWidget {
 }
 
 class _NumerosAleatoriosPageState extends State<NumerosAleatoriosPage> {
-  int numeroGerado = 0;
+  int? numeroGerado;
+  int? quantidadeCliques;
+  final CHAVE_NUMERO_ALEATORIO = 'numero_aleatorio';
+  final CHAVE_QUANTIDADE_CLIQUES = "quantidade_cliques";
+  late SharedPreferences storage;
+
+  @override
+  void initState() {
+    super.initState();
+    carregarDados();
+  }
+
+  void carregarDados() async {
+    storage = await SharedPreferences.getInstance();
+    setState(() {
+      numeroGerado = storage.getInt(CHAVE_NUMERO_ALEATORIO);
+      quantidadeCliques = storage.getInt(CHAVE_QUANTIDADE_CLIQUES);
+    });
+
+    print(numeroGerado);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +46,15 @@ class _NumerosAleatoriosPageState extends State<NumerosAleatoriosPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                numeroGerado.toString(),
+                numeroGerado == null
+                    ? "Nenhum número gerado"
+                    : numeroGerado.toString(),
+                style: TextStyle(fontSize: 25),
+              ),
+              Text(
+                quantidadeCliques == null
+                    ? "Nenhum clique efetuado"
+                    : quantidadeCliques.toString(),
                 style: TextStyle(fontSize: 25),
               ),
             ],
@@ -34,15 +62,14 @@ class _NumerosAleatoriosPageState extends State<NumerosAleatoriosPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            final storage = await SharedPreferences.getInstance();
+            storage = await SharedPreferences.getInstance();
             var random = Random();
             setState(() {
               numeroGerado = random.nextInt(1000);
+              quantidadeCliques = (quantidadeCliques ?? 0) + 1;
             });
-            storage.setInt('numero_aleatorio', numeroGerado);
-
-            var numero = storage.getInt('numero_aleatorio');
-            print(numero);
+            storage.setInt(CHAVE_NUMERO_ALEATORIO, numeroGerado!);
+            storage.setInt(CHAVE_QUANTIDADE_CLIQUES, quantidadeCliques!);
           },
           child: Icon(Icons.add),
         ),
