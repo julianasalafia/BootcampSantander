@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:trilhaapp/pages/configuracoes_page.dart';
+import 'package:trilhaapp/configuracoes/configuracoes_hive_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/numeros_aleatorios/numeros_aleatorios_hive.dart';
-import 'package:trilhaapp/pages/numeros_aleatorios/numeros_aleatorios_shared_preferences_page.dart';
 
 import '../../pages/dados_cadastrais.dart';
 
@@ -128,7 +127,7 @@ class CustomDrawer extends StatelessWidget {
                   children: [
                     Icon(Icons.gpp_maybe_rounded),
                     SizedBox(width: 10),
-                    Text('Configurações'),
+                    Text('Configurações Hive'),
                   ],
                 )),
             onTap: () {
@@ -136,7 +135,8 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext bc) => const ConfiguracoesPage()));
+                      builder: (BuildContext bc) =>
+                          const ConfiguracoesHivePage()));
             },
           ),
           Divider(),

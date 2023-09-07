@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp/services/app_storage_service.dart';
 
-class ConfiguracoesPage extends StatefulWidget {
-  const ConfiguracoesPage({super.key});
+class ConfiguracoesHivePage extends StatefulWidget {
+  const ConfiguracoesHivePage({super.key});
 
   @override
-  State<ConfiguracoesPage> createState() => _ConfiguracoesPageState();
+  State<ConfiguracoesHivePage> createState() => _ConfiguracoesHivePageState();
 }
 
-class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
+class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
   AppStorageService storage = AppStorageService();
   TextEditingController nomeUsuarioController = TextEditingController();
   TextEditingController alturaController = TextEditingController();
