@@ -3,7 +3,7 @@ import 'package:trilhaapp/configuracoes/configuracoes_hive_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/numeros_aleatorios/numeros_aleatorios_hive.dart';
 
-import '../../pages/dados_cadastrais.dart';
+import '../../dados_cadastrais/dados_cadastrais_hive.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -70,7 +70,7 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DadosCadastraisPage()));
+                      builder: (context) => DadosCadastraisHivePage()));
             },
           ),
           Divider(),
