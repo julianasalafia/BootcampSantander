@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp/model/tarefa.dart';
-import 'package:trilhaapp/repositories/tarefa_repository.dart';
+import 'package:trilhaapp/model/tarefa_hive_model.dart';
+import 'package:trilhaapp/repositories/tarefa_hive_repository.dart';
 
-class TarefaPage extends StatefulWidget {
-  const TarefaPage({super.key});
+class TarefaHivePage extends StatefulWidget {
+  const TarefaHivePage({super.key});
 
   @override
-  State<TarefaPage> createState() => _TarefaPageState();
+  State<TarefaHivePage> createState() => _TarefaHivePageState();
 }
 
-class _TarefaPageState extends State<TarefaPage> {
+class _TarefaHivePageState extends State<TarefaHivePage> {
   var descricaoController = TextEditingController();
-  var _tarefas = <Tarefa>[];
-  var tarefaRepository = TarefaRepository();
+  var _tarefas = <TarefaHiveModel>[];
+  late TarefaHiveRepository tarefaHiveRepository;
   var apenasNaoConcluidos = false;
 
   @override
@@ -22,11 +23,14 @@ class _TarefaPageState extends State<TarefaPage> {
   }
 
   void obterTarefas() async {
-    if (apenasNaoConcluidos) {
-      _tarefas = await tarefaRepository.listarNaoConcluidas();
-    } else {
-      _tarefas = await tarefaRepository.listarTarefas();
-    }
+    tarefaHiveRepository = await TarefaHiveRepository.carregar();
+    _tarefas = tarefaHiveRepository.obterDados();
+
+    //if (apenasNaoConcluidos) {
+    //  _tarefas = await tarefaRepository.listarNaoConcluidas();
+    // } else {
+    //  _tarefas = await tarefaRepository.listarTarefas();
+    // }
 
     setState(() {});
   }
@@ -54,8 +58,8 @@ class _TarefaPageState extends State<TarefaPage> {
                       ),
                       TextButton(
                         onPressed: () async {
-                          await tarefaRepository.adicionar(
-                              Tarefa(descricaoController.text, false));
+                          await tarefaRepository.salvar(TarefaHiveModel.criar(
+                              descricaoController.text, false));
                           Navigator.pop(context);
                           setState(() {});
                         },
@@ -96,15 +100,15 @@ class _TarefaPageState extends State<TarefaPage> {
                       var tarefa = _tarefas[index];
                       return Dismissible(
                         onDismissed: (DismissDirection dismissDirection) async {
-                          await tarefaRepository.remove(tarefa.id);
+                          //  await tarefaRepository.remove(tarefa.id);
                           obterTarefas();
                         },
-                        key: Key(tarefa.id),
+                        key: Key(tarefa.key),
                         child: ListTile(
                           title: Text(tarefa.descricao),
                           trailing: Switch(
                             onChanged: (bool value) async {
-                              await tarefaRepository.alterar(tarefa.id, value);
+                              //  await tarefaRepository.alterar(tarefa.id, value);
                               obterTarefas();
                             },
                             value: tarefa.concluido,
