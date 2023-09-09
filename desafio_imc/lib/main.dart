@@ -125,19 +125,35 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
                 const SizedBox(height: height),
-                Stack(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      imcText,
-                      style: kTextTitleResultBorderStyle,
+                    Stack(
+                      children: [
+                        Text(
+                          imcText,
+                          style: kTextTitleResultBorderStyle,
+                        ),
+                        Text(
+                          imcText,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Modak',
+                              fontSize: 50.0),
+                        ),
+                      ],
                     ),
-                    Text(
-                      imcText,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Modak',
-                          fontSize: 50.0),
-                    ),
+                    const SizedBox(width: 10),
+                    FloatingActionButton(
+                        mini: true,
+                        backgroundColor: AppColors.rosaTrio,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                width: 1, color: AppColors.vinho),
+                            borderRadius: BorderRadius.circular(100)),
+                        child: const Icon(Icons.open_in_full),
+                        onPressed: () {}),
                   ],
                 ),
                 Stack(
