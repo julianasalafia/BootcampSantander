@@ -26,6 +26,10 @@ class _MyAppState extends State<MyApp> {
   late TextEditingController nomeController;
   late TextEditingController pesoController;
   late TextEditingController alturaController;
+  Pessoa pessoa = Pessoa('', 0.0, 0.0);
+  List<Pessoa> pessoas = [];
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   void initState() {
@@ -38,6 +42,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: scaffoldMessengerKey,
       home: Scaffold(
         backgroundColor: AppColors.rosa,
         appBar: AppBar(
@@ -80,22 +85,43 @@ class _MyAppState extends State<MyApp> {
                 const SizedBox(height: height),
                 TextButtonWidget(
                   onPressed: () {
-                    try {
-                      nome = nomeController.text;
-                      peso = double.parse(pesoController.text);
-                      altura = double.parse(alturaController.text);
+                    nome = nomeController.text;
+                    peso = double.tryParse(pesoController.text);
+                    altura = double.tryParse(alturaController.text);
 
-                      Pessoa pessoa = Pessoa(nome, peso, altura);
-
-                      double imc = calculateIMC(pessoa.peso, pessoa.altura);
-                      setState(() {
-                        imcText = 'IMC: ${imc.toStringAsFixed(1)}';
-                        categoria = getCategoriaIMC(imc);
-                        result = getDescricaoCategoriaIMC(categoria);
-                      });
-                    } catch (exception) {
-                      print('Por favor, digite valores válidos.');
+                    if (nome == '' ||
+                        !nome.contains(RegExp(r'^[a-zA-Z\s]+$'))) {
+                      scaffoldMessengerKey.currentState!
+                          .showSnackBar(const SnackBar(
+                        content: Text('Preencha um nome válido.'),
+                      ));
+                      return;
                     }
+
+                    if (peso == null) {
+                      scaffoldMessengerKey.currentState!
+                          .showSnackBar(const SnackBar(
+                        content: Text('Preencha o campo peso adequadamente.'),
+                      ));
+                      return;
+                    }
+
+                    if (altura == null) {
+                      scaffoldMessengerKey.currentState!
+                          .showSnackBar(const SnackBar(
+                        content: Text('Preencha o campo altura adequadamente.'),
+                      ));
+                      return;
+                    }
+
+                    Pessoa pessoa = Pessoa(nome, peso, altura);
+                    double imc = calculateIMC(pessoa.peso, pessoa.altura);
+
+                    setState(() {
+                      imcText = 'IMC: ${imc.toStringAsFixed(1)}';
+                      categoria = getCategoriaIMC(imc);
+                      result = getDescricaoCategoriaIMC(categoria);
+                    });
                   },
                 ),
                 const SizedBox(height: height),
@@ -107,7 +133,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                     Text(
                       imcText,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Modak',
                           fontSize: 50.0),
