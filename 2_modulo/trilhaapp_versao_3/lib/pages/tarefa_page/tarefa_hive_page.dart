@@ -97,7 +97,7 @@ class _TarefaHivePageState extends State<TarefaHivePage> {
                           tarefaHiveRepository.excluir(tarefa);
                           obterTarefas();
                         },
-                        key: Key(tarefa.key),
+                        key: Key(tarefa.descricao),
                         child: ListTile(
                           title: Text(tarefa.descricao),
                           trailing: Switch(

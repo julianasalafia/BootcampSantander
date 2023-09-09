@@ -29,11 +29,24 @@ class TarefaHiveRepository {
 
   List<TarefaHiveModel> obterDados(bool naoConcluido) {
     if (naoConcluido) {
+      removerValoresInvalidos();
       return _box.values
           .cast<TarefaHiveModel>()
           .where((element) => !element.concluido)
           .toList();
     }
     return _box.values.cast<TarefaHiveModel>().toList();
+  }
+
+  void removerValoresInvalidos() {
+    var keys = _box.keys;
+
+    for (var key in keys) {
+      var value = _box.get(key);
+
+      if (value is! TarefaHiveModel) {
+        _box.delete(key);
+      }
+    }
   }
 }
