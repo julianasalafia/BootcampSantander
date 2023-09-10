@@ -10,11 +10,12 @@ class PageResults extends StatefulWidget {
 class _PageResultsState extends State<PageResults> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('resultados'),
+      ),
       body: Column(
-        children: [
-          Text('teste'),
-        ],
+        children: [],
       ),
     );
   }

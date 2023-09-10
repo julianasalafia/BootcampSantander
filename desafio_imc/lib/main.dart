@@ -1,3 +1,4 @@
+import 'package:desafio_imc/pages/page_results.dart';
 import 'package:desafio_imc/pessoa.dart';
 import 'package:desafio_imc/shared/app_colors.dart';
 import 'package:desafio_imc/shared/constants.dart';
@@ -43,132 +44,142 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: scaffoldMessengerKey,
-      home: Scaffold(
-        backgroundColor: AppColors.rosa,
-        appBar: AppBar(
-          backgroundColor: AppColors.rosaDuo,
-          elevation: 0,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 15.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const HeaderWidget(),
-                const SizedBox(height: height),
-                buildTextField(hintText: 'nome', controller: nomeController),
-                const SizedBox(height: height),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: Column(
+      home: Builder(
+        builder: (context) => Scaffold(
+          backgroundColor: AppColors.rosa,
+          appBar: AppBar(
+            backgroundColor: AppColors.rosaDuo,
+            elevation: 0,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 15.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const HeaderWidget(),
+                  const SizedBox(height: height),
+                  buildTextField(hintText: 'nome', controller: nomeController),
+                  const SizedBox(height: height),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            buildTextField(
+                                hintText: 'peso', controller: pesoController),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: width),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            buildTextField(
+                                hintText: 'altura',
+                                controller: alturaController),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: height),
+                  TextButtonWidget(
+                    onPressed: () {
+                      nome = nomeController.text;
+                      peso = double.tryParse(pesoController.text);
+                      altura = double.tryParse(alturaController.text);
+
+                      if (nome == '' ||
+                          !nome.contains(RegExp(r'^[a-zA-Z\s]+$'))) {
+                        scaffoldMessengerKey.currentState!
+                            .showSnackBar(const SnackBar(
+                          content: Text('Preencha um nome válido.'),
+                        ));
+                        return;
+                      }
+
+                      if (peso == null) {
+                        scaffoldMessengerKey.currentState!
+                            .showSnackBar(const SnackBar(
+                          content: Text('Preencha o campo peso adequadamente.'),
+                        ));
+                        return;
+                      }
+
+                      if (altura == null) {
+                        scaffoldMessengerKey.currentState!
+                            .showSnackBar(const SnackBar(
+                          content:
+                              Text('Preencha o campo altura adequadamente.'),
+                        ));
+                        return;
+                      }
+
+                      Pessoa pessoa = Pessoa(nome, peso, altura);
+                      double imc = calculateIMC(pessoa.peso, pessoa.altura);
+
+                      setState(() {
+                        imcText = 'IMC: ${imc.toStringAsFixed(1)}';
+                        categoria = getCategoriaIMC(imc);
+                        result = getDescricaoCategoriaIMC(categoria);
+                      });
+                    },
+                  ),
+                  const SizedBox(height: height),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Stack(
                         children: [
-                          buildTextField(
-                              hintText: 'peso', controller: pesoController),
+                          Text(
+                            imcText,
+                            style: kTextTitleResultBorderStyle,
+                          ),
+                          Text(
+                            imcText,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Modak',
+                                fontSize: 50.0),
+                          ),
                         ],
                       ),
-                    ),
-                    const SizedBox(width: width),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          buildTextField(
-                              hintText: 'altura', controller: alturaController),
-                        ],
+                      const SizedBox(width: 10),
+                      FloatingActionButton(
+                          mini: true,
+                          backgroundColor: AppColors.rosaTrio,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                  width: 1, color: AppColors.vinho),
+                              borderRadius: BorderRadius.circular(100)),
+                          child: const Icon(Icons.open_in_full),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PageResults()),
+                            );
+                          }),
+                    ],
+                  ),
+                  Stack(
+                    children: [
+                      Text(
+                        result.toUpperCase(),
+                        style: kResultTextStyle,
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: height),
-                TextButtonWidget(
-                  onPressed: () {
-                    nome = nomeController.text;
-                    peso = double.tryParse(pesoController.text);
-                    altura = double.tryParse(alturaController.text);
-
-                    if (nome == '' ||
-                        !nome.contains(RegExp(r'^[a-zA-Z\s]+$'))) {
-                      scaffoldMessengerKey.currentState!
-                          .showSnackBar(const SnackBar(
-                        content: Text('Preencha um nome válido.'),
-                      ));
-                      return;
-                    }
-
-                    if (peso == null) {
-                      scaffoldMessengerKey.currentState!
-                          .showSnackBar(const SnackBar(
-                        content: Text('Preencha o campo peso adequadamente.'),
-                      ));
-                      return;
-                    }
-
-                    if (altura == null) {
-                      scaffoldMessengerKey.currentState!
-                          .showSnackBar(const SnackBar(
-                        content: Text('Preencha o campo altura adequadamente.'),
-                      ));
-                      return;
-                    }
-
-                    Pessoa pessoa = Pessoa(nome, peso, altura);
-                    double imc = calculateIMC(pessoa.peso, pessoa.altura);
-
-                    setState(() {
-                      imcText = 'IMC: ${imc.toStringAsFixed(1)}';
-                      categoria = getCategoriaIMC(imc);
-                      result = getDescricaoCategoriaIMC(categoria);
-                    });
-                  },
-                ),
-                const SizedBox(height: height),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      children: [
-                        Text(
-                          imcText,
-                          style: kTextTitleResultBorderStyle,
-                        ),
-                        Text(
-                          imcText,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Modak',
-                              fontSize: 50.0),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(width: 10),
-                    FloatingActionButton(
-                        mini: true,
-                        backgroundColor: AppColors.rosaTrio,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                width: 1, color: AppColors.vinho),
-                            borderRadius: BorderRadius.circular(100)),
-                        child: const Icon(Icons.open_in_full),
-                        onPressed: () {}),
-                  ],
-                ),
-                Stack(
-                  children: [
-                    Text(
-                      result.toUpperCase(),
-                      style: kResultTextStyle,
-                    ),
-                    Text(
-                      result.toUpperCase(),
-                      style: kResultTextStyleBorderStyle,
-                    ),
-                  ],
-                ),
-              ],
+                      Text(
+                        result.toUpperCase(),
+                        style: kResultTextStyleBorderStyle,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
