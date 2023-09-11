@@ -5,6 +5,7 @@ import 'package:desafio_imc/shared/constants.dart';
 import 'package:desafio_imc/text_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'header_widget.dart';
+import 'imc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,7 @@ class _MyAppState extends State<MyApp> {
   late TextEditingController pesoController;
   late TextEditingController alturaController;
   Pessoa pessoa = Pessoa('', 0.0, 0.0);
+  late IMC pessoaImc;
   List<Pessoa> pessoas = [];
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
@@ -117,13 +119,15 @@ class _MyAppState extends State<MyApp> {
                         ));
                         return;
                       }
-
-                      Pessoa pessoa = Pessoa(nome, peso, altura);
-                      double imc = calculateIMC(pessoa.peso, pessoa.altura);
+                      pessoa = Pessoa(nome, peso, altura);
+                      pessoaImc = IMC(pessoa);
+                      pessoas.add(pessoa);
+                      print(pessoas);
+                      print(pessoaImc);
 
                       setState(() {
-                        imcText = 'IMC: ${imc.toStringAsFixed(1)}';
-                        categoria = getCategoriaIMC(imc);
+                        imcText = 'IMC: ${pessoaImc.imc?.toStringAsFixed(1)}';
+                        categoria = getCategoriaIMC(pessoaImc);
                         result = getDescricaoCategoriaIMC(categoria);
                       });
                     },
@@ -187,12 +191,9 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  double calculateIMC(double? peso, double? altura) {
-    double alturaEmMetros = altura! / 100;
-    return peso! / (alturaEmMetros! * alturaEmMetros);
-  }
+  CategoriaIMC getCategoriaIMC(IMC pessoa) {
+    double imc = pessoa.imc!;
 
-  CategoriaIMC getCategoriaIMC(double imc) {
     if (imc < 16) {
       return CategoriaIMC.magrezaGrave;
     } else if (imc < 17) {
@@ -233,5 +234,9 @@ class _MyAppState extends State<MyApp> {
       default:
         throw ArgumentError('Categoria inválida');
     }
+  }
+
+  List<Pessoa> getResults() {
+    return pessoas;
   }
 }
