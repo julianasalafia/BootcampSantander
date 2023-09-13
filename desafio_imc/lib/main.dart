@@ -4,6 +4,7 @@ import 'package:desafio_imc/shared/app_colors.dart';
 import 'package:desafio_imc/shared/constants.dart';
 import 'package:desafio_imc/text_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'header_widget.dart';
 import 'imc.dart';
 
@@ -29,8 +30,10 @@ class _MyAppState extends State<MyApp> {
   late TextEditingController pesoController;
   late TextEditingController alturaController;
   Pessoa pessoa = Pessoa('', 0.0, 0.0);
-  late IMC pessoaImc;
+  late IMC resultadoIMC;
   List<Pessoa> pessoas = [];
+  Map<Pessoa, IMC> setPessoasIMC = {};
+
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
@@ -45,6 +48,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.openSansTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
       scaffoldMessengerKey: scaffoldMessengerKey,
       home: Builder(
         builder: (context) => Scaffold(
@@ -120,15 +128,18 @@ class _MyAppState extends State<MyApp> {
                         return;
                       }
                       pessoa = Pessoa(nome, peso, altura);
-                      pessoaImc = IMC(pessoa);
+                      resultadoIMC = IMC(pessoa);
                       pessoas.add(pessoa);
-                      print(pessoas);
-                      print(pessoaImc);
+                      setPessoasIMC[pessoa] = resultadoIMC;
+
+                      print(setPessoasIMC);
 
                       setState(() {
-                        imcText = 'IMC: ${pessoaImc.imc?.toStringAsFixed(1)}';
-                        categoria = getCategoriaIMC(pessoaImc);
-                        result = getDescricaoCategoriaIMC(categoria);
+                        imcText =
+                            'IMC: ${resultadoIMC.imc?.toStringAsFixed(1)}';
+                        categoria = resultadoIMC.getCategoriaIMC(resultadoIMC);
+                        result =
+                            resultadoIMC.getDescricaoCategoriaIMC(categoria);
                       });
                     },
                   ),
@@ -152,22 +163,24 @@ class _MyAppState extends State<MyApp> {
                         ],
                       ),
                       const SizedBox(width: 10),
-                      FloatingActionButton(
-                          mini: true,
-                          backgroundColor: AppColors.rosaTrio,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                  width: 1, color: AppColors.vinho),
-                              borderRadius: BorderRadius.circular(100)),
-                          child: const Icon(Icons.open_in_full),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PageResults()),
-                            );
-                          }),
+                      setPessoasIMC.isEmpty
+                          ? Container()
+                          : FloatingActionButton(
+                              mini: true,
+                              backgroundColor: AppColors.rosaTrio,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      width: 1, color: AppColors.vinho),
+                                  borderRadius: BorderRadius.circular(100)),
+                              child: const Icon(Icons.open_in_full),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PageResults()),
+                                );
+                              }),
                     ],
                   ),
                   Stack(
@@ -182,6 +195,109 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ],
                   ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      setPessoasIMC.isEmpty
+                          ? Container()
+                          : Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Stack(
+                                    children: [
+                                      Text(
+                                        'nome',
+                                        style: kResultTextStyle,
+                                      ),
+                                      Text(
+                                        'nome',
+                                        style: kResultTextStyleBorderStyle,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Stack(
+                                    children: [
+                                      Text(
+                                        'kg',
+                                        style: kResultTextStyle,
+                                      ),
+                                      Text(
+                                        'kg',
+                                        style: kResultTextStyleBorderStyle,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Stack(
+                                    children: [
+                                      Text(
+                                        'cm',
+                                        style: kResultTextStyle,
+                                      ),
+                                      Text(
+                                        'cm',
+                                        style: kResultTextStyleBorderStyle,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Stack(
+                                    children: [
+                                      Text(
+                                        'IMC',
+                                        style: kResultTextStyle,
+                                      ),
+                                      Text(
+                                        'IMC',
+                                        style: kResultTextStyleBorderStyle,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                      ...setPessoasIMC.entries.map((entry) {
+                        Pessoa pessoa = entry.key;
+                        IMC imc = entry.value;
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                pessoa.nome.toString(),
+                                style: kListTextStyle,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                pessoa.peso.toString(),
+                                style: kListTextStyle,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                pessoa.altura!.toStringAsFixed(0),
+                                style: kListTextStyle,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                imc.imc!.toStringAsFixed(1),
+                                style: kListTextStyle,
+                              ),
+                            ),
+                          ],
+                        );
+                      }).toList(),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -189,54 +305,5 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
-  }
-
-  CategoriaIMC getCategoriaIMC(IMC pessoa) {
-    double imc = pessoa.imc!;
-
-    if (imc < 16) {
-      return CategoriaIMC.magrezaGrave;
-    } else if (imc < 17) {
-      return CategoriaIMC.magrezaModerada;
-    } else if (imc < 18.5) {
-      return CategoriaIMC.magrezaLeve;
-    } else if (imc < 25) {
-      return CategoriaIMC.saudavel;
-    } else if (imc < 30) {
-      return CategoriaIMC.sobrepeso;
-    } else if (imc < 35) {
-      return CategoriaIMC.obesidadeGrauI;
-    } else if (imc < 40) {
-      return CategoriaIMC.obesidadeGrauII;
-    } else {
-      return CategoriaIMC.obesidadeGrauIII;
-    }
-  }
-
-  String getDescricaoCategoriaIMC(CategoriaIMC categoria) {
-    switch (categoria) {
-      case CategoriaIMC.magrezaGrave:
-        return 'magreza grave';
-      case CategoriaIMC.magrezaModerada:
-        return 'magreza moderada';
-      case CategoriaIMC.magrezaLeve:
-        return 'magreza leve';
-      case CategoriaIMC.saudavel:
-        return 'saudável';
-      case CategoriaIMC.sobrepeso:
-        return 'sobrepeso';
-      case CategoriaIMC.obesidadeGrauI:
-        return 'obesidade grau I';
-      case CategoriaIMC.obesidadeGrauII:
-        return 'obesidade grau II';
-      case CategoriaIMC.obesidadeGrauIII:
-        return 'obesidade grau III';
-      default:
-        throw ArgumentError('Categoria inválida');
-    }
-  }
-
-  List<Pessoa> getResults() {
-    return pessoas;
   }
 }

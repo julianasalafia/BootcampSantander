@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
@@ -20,6 +21,13 @@ const kTextTitleStyle = TextStyle(
   fontFamily: 'Modak',
   fontSize: 80.0,
   color: AppColors.rosaDuo,
+);
+
+const kListTextStyle = TextStyle(
+  fontFamily: 'OpenSans',
+  fontSize: 18.0,
+  fontWeight: FontWeight.w500,
+  color: AppColors.vinho,
 );
 
 const kTextStyle = TextStyle(
