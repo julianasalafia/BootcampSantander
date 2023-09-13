@@ -3,9 +3,11 @@ import 'package:desafio_imc/pessoa.dart';
 import 'package:desafio_imc/shared/app_colors.dart';
 import 'package:desafio_imc/shared/constants.dart';
 import 'package:desafio_imc/text_button_widget.dart';
+import 'package:desafio_imc/widgets/floating_action_button_widget.dart';
+import 'package:desafio_imc/widgets/show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'header_widget.dart';
+import 'widgets/header_widget.dart';
 import 'imc.dart';
 
 void main() {
@@ -33,6 +35,7 @@ class _MyAppState extends State<MyApp> {
   late IMC resultadoIMC;
   List<Pessoa> pessoas = [];
   Map<Pessoa, IMC> setPessoasIMC = {};
+  ShowSnackBarWidget showSnackBarWidget = ShowSnackBarWidget();
 
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
@@ -76,70 +79,38 @@ class _MyAppState extends State<MyApp> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
-                        child: Column(
-                          children: [
-                            buildTextField(
-                                hintText: 'peso', controller: pesoController),
-                          ],
-                        ),
+                        child: buildTextField(
+                            controller: pesoController, hintText: 'peso'),
                       ),
                       const SizedBox(width: width),
                       Expanded(
-                        child: Column(
-                          children: [
-                            buildTextField(
-                                hintText: 'altura',
-                                controller: alturaController),
-                          ],
-                        ),
+                        child: buildTextField(
+                            controller: alturaController, hintText: 'altura'),
                       ),
                     ],
                   ),
                   const SizedBox(height: height),
                   TextButtonWidget(
                     onPressed: () {
-                      nome = nomeController.text;
-                      peso = double.tryParse(pesoController.text);
-                      altura = double.tryParse(alturaController.text);
+                      convertType();
 
-                      if (nome == '' ||
-                          !nome.contains(RegExp(r'^[a-zA-Z\s]+$'))) {
-                        scaffoldMessengerKey.currentState!
-                            .showSnackBar(const SnackBar(
-                          content: Text('Preencha um nome válido.'),
-                        ));
-                        return;
-                      }
+                      showSnackBarWidget.validateString(
+                          scaffoldMessengerKey, nome, 'nome');
 
-                      if (peso == null) {
-                        scaffoldMessengerKey.currentState!
-                            .showSnackBar(const SnackBar(
-                          content: Text('Preencha o campo peso adequadamente.'),
-                        ));
-                        return;
-                      }
+                      showSnackBarWidget.validateDouble(
+                          scaffoldMessengerKey, peso, 'peso');
 
-                      if (altura == null) {
-                        scaffoldMessengerKey.currentState!
-                            .showSnackBar(const SnackBar(
-                          content:
-                              Text('Preencha o campo altura adequadamente.'),
-                        ));
-                        return;
-                      }
+                      showSnackBarWidget.validateDouble(
+                          scaffoldMessengerKey, altura, 'altura');
+
                       pessoa = Pessoa(nome, peso, altura);
                       resultadoIMC = IMC(pessoa);
                       pessoas.add(pessoa);
+
                       setPessoasIMC[pessoa] = resultadoIMC;
 
-                      print(setPessoasIMC);
-
                       setState(() {
-                        imcText =
-                            'IMC: ${resultadoIMC.imc?.toStringAsFixed(1)}';
-                        categoria = resultadoIMC.getCategoriaIMC(resultadoIMC);
-                        result =
-                            resultadoIMC.getDescricaoCategoriaIMC(categoria);
+                        printIMCResult();
                       });
                     },
                   ),
@@ -165,23 +136,11 @@ class _MyAppState extends State<MyApp> {
                       const SizedBox(width: 10),
                       setPessoasIMC.isEmpty
                           ? Container()
-                          : FloatingActionButton(
-                              mini: true,
-                              backgroundColor: AppColors.rosaTrio,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                      width: 1, color: AppColors.vinho),
-                                  borderRadius: BorderRadius.circular(100)),
-                              child: const Icon(Icons.open_in_full),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PageResults(
-                                          pessoasIMC: setPessoasIMC)),
-                                );
-                              }),
+                          : FloatingActionButtonWidget(
+                              page: PageResults(
+                                pessoasIMC: setPessoasIMC,
+                              ),
+                            ),
                     ],
                   ),
                   Stack(
@@ -199,7 +158,7 @@ class _MyAppState extends State<MyApp> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       setPessoasIMC.isEmpty
                           ? Container()
                           : Row(
@@ -208,7 +167,7 @@ class _MyAppState extends State<MyApp> {
                                   flex: 2,
                                   child: Stack(
                                     children: [
-                                      Text(
+                                      const Text(
                                         'nome',
                                         style: kResultTextStyle,
                                       ),
@@ -222,7 +181,7 @@ class _MyAppState extends State<MyApp> {
                                 Expanded(
                                   child: Stack(
                                     children: [
-                                      Text(
+                                      const Text(
                                         'kg',
                                         style: kResultTextStyle,
                                       ),
@@ -236,7 +195,7 @@ class _MyAppState extends State<MyApp> {
                                 Expanded(
                                   child: Stack(
                                     children: [
-                                      Text(
+                                      const Text(
                                         'cm',
                                         style: kResultTextStyle,
                                       ),
@@ -306,5 +265,17 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  void printIMCResult() {
+    imcText = 'IMC: ${resultadoIMC.imc?.toStringAsFixed(1)}';
+    categoria = resultadoIMC.getCategoriaIMC(resultadoIMC);
+    result = resultadoIMC.getDescricaoCategoriaIMC(categoria);
+  }
+
+  void convertType() {
+    nome = nomeController.text;
+    peso = double.tryParse(pesoController.text);
+    altura = double.tryParse(alturaController.text);
   }
 }
