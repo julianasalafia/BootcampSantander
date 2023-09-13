@@ -178,7 +178,8 @@ class _MyAppState extends State<MyApp> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PageResults()),
+                                      builder: (context) => PageResults(
+                                          pessoasIMC: setPessoasIMC)),
                                 );
                               }),
                     ],
