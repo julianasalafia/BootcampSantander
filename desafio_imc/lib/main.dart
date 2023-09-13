@@ -97,11 +97,15 @@ class _MyAppState extends State<MyApp> {
                       showSnackBarWidget.validateString(
                           scaffoldMessengerKey, nome, 'nome');
 
-                      showSnackBarWidget.validateDouble(
-                          scaffoldMessengerKey, peso, 'peso');
+                      if (nome.isNotEmpty) {
+                        showSnackBarWidget.validateDouble(
+                            scaffoldMessengerKey, peso, 'peso');
+                      }
 
-                      showSnackBarWidget.validateDouble(
-                          scaffoldMessengerKey, altura, 'altura');
+                      if (!peso!.isNaN) {
+                        showSnackBarWidget.validateDouble(
+                            scaffoldMessengerKey, altura, 'altura');
+                      }
 
                       pessoa = Pessoa(nome, peso, altura);
                       resultadoIMC = IMC(pessoa);
