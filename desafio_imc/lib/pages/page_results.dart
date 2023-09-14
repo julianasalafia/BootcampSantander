@@ -28,15 +28,32 @@ class PageResults extends StatelessWidget {
               children: pessoasIMC.entries.map((entry) {
                 Pessoa pessoa = entry.key;
                 IMC imc = entry.value;
-                return ListTile(
-                  leading: Icon(
-                    Icons.person_rounded,
-                    size: 50.0,
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 15.0),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.rosa,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.person_rounded,
+                        size: 50.0,
+                      ),
+                      iconColor: AppColors.rosaTrio,
+                      title: Text(
+                        pessoa.nome.toString(),
+                        style: const TextStyle(
+                            color: Colors.black54, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                          'Peso: ${pessoa.peso.toString()}, Altura: ${pessoa.altura!.toStringAsFixed(0)}, IMC: ${imc.imc!.toStringAsFixed(1)}'),
+                    ),
                   ),
-                  iconColor: AppColors.rosaDuo,
-                  title: Text(pessoa.nome.toString()),
-                  subtitle: Text(
-                      'Peso: ${pessoa.peso.toString()}, Altura: ${pessoa.altura!.toStringAsFixed(0)}, IMC: ${imc.imc!.toStringAsFixed(1)}'),
                 );
               }).toList(),
             ),
