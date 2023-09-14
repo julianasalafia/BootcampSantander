@@ -7,6 +7,7 @@ import 'package:desafio_imc/widgets/floating_action_button_widget.dart';
 import 'package:desafio_imc/widgets/show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'widgets/header_widget.dart';
 import 'imc.dart';
 
@@ -22,9 +23,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final CHAVE_NOME_USUARIO = 'CHAVE_NOME_USUARIO';
+  final CHAVE_ALTURA_USUARIO = 'CHAVE_PESO_USUARIO';
   String imcText = '';
   String result = '';
-  late String nome;
+  String? nome;
   double? peso;
   double? altura;
   late CategoriaIMC categoria;
@@ -46,6 +49,18 @@ class _MyAppState extends State<MyApp> {
     nomeController = TextEditingController();
     pesoController = TextEditingController();
     alturaController = TextEditingController();
+
+    loadData();
+  }
+
+  void loadData() async {
+    final storage = await SharedPreferences.getInstance();
+    setState(() {
+      nome = storage.getString(CHAVE_NOME_USUARIO)!;
+      altura = storage.getDouble(CHAVE_ALTURA_USUARIO)!;
+    });
+    nomeController.text = nome!;
+    alturaController.text = altura!.toString();
   }
 
   @override
@@ -64,9 +79,10 @@ class _MyAppState extends State<MyApp> {
             backgroundColor: AppColors.rosaDuo,
             elevation: 0,
           ),
-          body: Padding(
-            padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 15.0),
-            child: SingleChildScrollView(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 50.0, bottom: 15.0, right: 25.0, left: 25.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -91,13 +107,14 @@ class _MyAppState extends State<MyApp> {
                   ),
                   const SizedBox(height: height),
                   TextButtonWidget(
-                    onPressed: () {
+                    onPressed: () async {
+                      final storage = await SharedPreferences.getInstance();
                       convertType();
 
                       showSnackBarWidget.validateString(
-                          scaffoldMessengerKey, nome, 'nome');
+                          scaffoldMessengerKey, nome!, 'nome');
 
-                      if (nome.isNotEmpty) {
+                      if (nome!.isNotEmpty) {
                         showSnackBarWidget.validateDouble(
                             scaffoldMessengerKey, peso, 'peso');
                       }
@@ -115,7 +132,10 @@ class _MyAppState extends State<MyApp> {
 
                       setState(() {
                         printIMCResult();
+                        pesoController.clear();
                       });
+                      storage.setString(CHAVE_NOME_USUARIO, nome!);
+                      storage.setDouble(CHAVE_ALTURA_USUARIO, altura!);
                     },
                   ),
                   const SizedBox(height: height),
