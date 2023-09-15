@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trilhaapp/configuracoes/configuracoes_hive_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/numeros_aleatorios/numeros_aleatorios_hive.dart';
+import 'package:trilhaapp/pages/posts_page.dart';
 
 import '../../dados_cadastrais/dados_cadastrais_hive.dart';
 
@@ -160,6 +161,28 @@ class CustomDrawer extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (BuildContext bc) =>
                           const NumerosAleatoriosHivePage()));
+            },
+          ),
+          Divider(),
+          SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Icon(Icons.post_add),
+                    SizedBox(width: 10),
+                    Text('Posts'),
+                  ],
+                )),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext bc) => const PostsPage()));
             },
           ),
           Divider(),
