@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:trilhaapp/model/via_cep_model.dart';
 
+import '../repositories/via_cep_repository.dart';
+
 class ConsultaCEP extends StatefulWidget {
   const ConsultaCEP({super.key});
 
@@ -13,10 +15,9 @@ class ConsultaCEP extends StatefulWidget {
 
 class _ConsultaCEPState extends State<ConsultaCEP> {
   var cepController = TextEditingController(text: '');
-  String endereco = '';
-  String cidade = '';
-  String estado = '';
   bool loading = false;
+  var viaCepModel = ViaCEPModel();
+  var viaCepRepository = ViaCEPRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -36,26 +37,12 @@ class _ConsultaCEPState extends State<ConsultaCEP> {
               onChanged: (String value) async {
                 if (value != null && value.trim().length == 8) {
                   var cep = value.replaceAll(RegExp(r'[^0-9]'), '');
-                  print(cep);
                   if (cep.length == 8) {
                     setState(() {
                       loading = true;
                     });
-                    var response = await http
-                        .get(Uri.parse('https://viacep.com.br/ws/$cep/json/'));
-                    print(response.statusCode);
-                    print(response.body);
-                    var json = jsonDecode(response.body);
-                    var viaCepModel = ViaCEPModel.fromJson(json);
-                    print(viaCepModel);
-                    cidade = viaCepModel.localidade ?? '';
-                    estado = viaCepModel.uf ?? '';
-                    endereco = viaCepModel.logradouro ?? '';
-                  } else {
-                    cidade = '';
-                    estado = '';
-                    endereco = '';
-                  }
+                    viaCepModel = await viaCepRepository.consultarCEP(cep);
+                  } else {}
                   setState(() {
                     loading = false;
                   });
@@ -64,11 +51,11 @@ class _ConsultaCEPState extends State<ConsultaCEP> {
             ),
             SizedBox(height: 50),
             Text(
-              endereco,
+              viaCepModel.logradouro ?? '',
               style: TextStyle(fontSize: 22),
             ),
             Text(
-              '$cidade - $estado',
+              '${viaCepModel.localidade ?? ''} - ${viaCepModel.uf ?? ''}',
               style: TextStyle(fontSize: 22),
             ),
             if (loading) CircularProgressIndicator(),
@@ -76,12 +63,7 @@ class _ConsultaCEPState extends State<ConsultaCEP> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          var response =
-              await http.get(Uri.parse('https://www.google.com/juliana'));
-          print(response.statusCode);
-          print(response.body);
-        },
+        onPressed: () async {},
         child: const Icon(Icons.add),
       ),
     ));
