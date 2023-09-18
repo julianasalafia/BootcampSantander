@@ -194,6 +194,28 @@ class CustomDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: [
+                    Icon(Icons.help),
+                    SizedBox(width: 10),
+                    Text('Herois'),
+                  ],
+                )),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext bc) => const PostsPage()));
+            },
+          ),
+          Divider(),
+          SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: Row(
+                  children: [
                     Icon(Icons.exit_to_app),
                     SizedBox(width: 10),
                     Text('Sair'),
