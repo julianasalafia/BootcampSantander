@@ -202,9 +202,6 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 )),
             onTap: () async {
-              var marvelApiRepository = MarvelApiRepository();
-              var heroes = await marvelApiRepository.getCharacters();
-              print(heroes);
               Navigator.pop(context);
               Navigator.push(
                   context,
