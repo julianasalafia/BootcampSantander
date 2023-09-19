@@ -11,7 +11,7 @@ class MarvelApiRepository {
     var ts = DateTime.now().microsecondsSinceEpoch.toString();
     var publicKey = dotenv.get('MARVELPUBLICKEY');
     var privateKey = dotenv.get('MARVELAPIKEY');
-    var hash = generateMd5(ts + privateKey + publicKey);
+    var hash = _generateMd5(ts + privateKey + publicKey);
     var query = 'ts=$ts&apikey=$publicKey&hash=$hash';
     var result =
         await dio.get('http://gateway.marvel.com/v1/public/characters?$query');
@@ -19,7 +19,7 @@ class MarvelApiRepository {
     return charactersModel;
   }
 
-  generateMd5(String data) {
+  _generateMd5(String data) {
     var content = Utf8Encoder().convert(data);
     var md5 = crypto.md5;
     var digest = md5.convert(content);

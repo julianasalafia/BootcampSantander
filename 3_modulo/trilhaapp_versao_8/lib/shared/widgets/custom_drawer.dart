@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp/configuracoes/configuracoes_hive_page.dart';
+import 'package:trilhaapp/pages/characters/characters_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/numeros_aleatorios/numeros_aleatorios_hive.dart';
 import 'package:trilhaapp/pages/posts_page.dart';
+import 'package:trilhaapp/repositories/marvel/marvel_api_repository.dart';
 
 import '../../dados_cadastrais/dados_cadastrais_hive.dart';
 
@@ -199,12 +201,15 @@ class CustomDrawer extends StatelessWidget {
                     Text('Herois'),
                   ],
                 )),
-            onTap: () {
+            onTap: () async {
+              var marvelApiRepository = MarvelApiRepository();
+              var heroes = await marvelApiRepository.getCharacters();
+              print(heroes);
               Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext bc) => const PostsPage()));
+                      builder: (BuildContext bc) => const CharactersPage()));
             },
           ),
           Divider(),
