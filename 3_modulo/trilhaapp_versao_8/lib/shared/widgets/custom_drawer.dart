@@ -4,8 +4,7 @@ import 'package:trilhaapp/pages/characters/characters_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/numeros_aleatorios/numeros_aleatorios_hive.dart';
 import 'package:trilhaapp/pages/posts_page.dart';
-import 'package:trilhaapp/repositories/marvel/marvel_api_repository.dart';
-
+import 'package:trilhaapp/repositories/back4app/tarefas_back4app_repository.dart';
 import '../../dados_cadastrais/dados_cadastrais_hive.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -14,8 +13,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
           InkWell(
             onTap: () {
@@ -216,7 +214,33 @@ class CustomDrawer extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 width: double.infinity,
-                child: Row(
+                child: const Row(
+                  children: [
+                    Icon(Icons.help),
+                    SizedBox(width: 10),
+                    Text('Tarefas HTTP'),
+                  ],
+                )),
+            onTap: () async {
+              var tarefa = TarefasBack4AppRepository();
+              var tarefas = await tarefa.obterTarefas();
+              print(tarefas);
+
+              Navigator.pop(context);
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (BuildContext bc) => const CharactersPage()));
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
                   children: [
                     Icon(Icons.exit_to_app),
                     SizedBox(width: 10),
