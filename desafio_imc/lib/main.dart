@@ -24,7 +24,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final CHAVE_NOME_USUARIO = 'CHAVE_NOME_USUARIO';
-  final CHAVE_ALTURA_USUARIO = 'CHAVE_PESO_USUARIO';
+  final CHAVE_ALTURA_USUARIO = 'CHAVE_ALTURA_USUARIO';
   String imcText = '';
   String result = '';
   String? nome;
@@ -140,31 +140,34 @@ class _MyAppState extends State<MyApp> {
                   ),
                   const SizedBox(height: height),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Stack(
-                        children: [
-                          Text(
-                            imcText,
-                            style: kTextTitleResultBorderStyle,
-                          ),
-                          Text(
-                            imcText,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Modak',
-                                fontSize: 50.0),
-                          ),
-                        ],
+                      Expanded(
+                        flex: 7,
+                        child: Stack(
+                          children: [
+                            Text(
+                              imcText,
+                              style: kTextTitleResultBorderStyle,
+                            ),
+                            Text(
+                              imcText,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Modak',
+                                  fontSize: 50.0),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(width: 10),
-                      setPessoasIMC.isEmpty
-                          ? Container()
-                          : FloatingActionButtonWidget(
-                              page: PageResults(
-                                pessoasIMC: setPessoasIMC,
-                              ),
-                            ),
+                      Expanded(
+                        flex: 1,
+                        child: FloatingActionButtonWidget(
+                          page: PageResults(
+                            pessoasIMC: setPessoasIMC,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   Stack(
