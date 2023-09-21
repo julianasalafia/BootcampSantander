@@ -29,6 +29,8 @@ class TarefaBack4AppModel {
   TarefaBack4AppModel(this.objectId, this.descricao, this.concluido,
       this.createdAt, this.updatedAt);
 
+  TarefaBack4AppModel.criar(this.descricao, this.concluido);
+
   TarefaBack4AppModel.fromJson(Map<String, dynamic> json) {
     objectId = json['objectId'] ?? '';
     descricao = json['descricao'] ?? '';

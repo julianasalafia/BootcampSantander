@@ -59,8 +59,9 @@ class _TarefaHttpPageState extends State<TarefaHttpPage> {
                       ),
                       TextButton(
                         onPressed: () async {
-                          // await tarefaRepository.salvar(TarefaSQLiteModel(
-                          //     0, descricaoController.text, false));
+                          await tarefaRepository.criar(
+                              TarefaBack4AppModel.criar(
+                                  descricaoController.text, false));
                           Navigator.pop(context);
                           obterTarefas();
                           setState(() {});
@@ -105,7 +106,7 @@ class _TarefaHttpPageState extends State<TarefaHttpPage> {
                             return Dismissible(
                               onDismissed:
                                   (DismissDirection dismissDirection) async {
-                                // tarefaRepository.remover(tarefa.id);
+                                await tarefaRepository.remover(tarefa.objectId);
                                 obterTarefas();
                               },
                               key: Key(tarefa.descricao),
@@ -114,7 +115,7 @@ class _TarefaHttpPageState extends State<TarefaHttpPage> {
                                 trailing: Switch(
                                   onChanged: (bool value) async {
                                     tarefa.concluido = value;
-                                    // tarefaRepository.atualizar(tarefa);
+                                    await tarefaRepository.atualizar(tarefa);
                                     obterTarefas();
                                   },
                                   value: tarefa.concluido,
