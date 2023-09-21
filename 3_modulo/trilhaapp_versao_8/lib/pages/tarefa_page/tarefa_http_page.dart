@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:trilhaapp/model/tarefa_sqlite_model.dart';
+import 'package:trilhaapp/repositories/back4app/tarefas_back4app_model.dart';
 
-import '../../repositories/sqlite/tarefa_sqlite_repository.dart';
+import '../../repositories/back4app/tarefas_back4app_repository.dart';
 
-class TarefaSQLitePage extends StatefulWidget {
-  const TarefaSQLitePage({super.key});
+class TarefaHttpPage extends StatefulWidget {
+  const TarefaHttpPage({super.key});
 
   @override
-  State<TarefaSQLitePage> createState() => _TarefaSQLitePageState();
+  State<TarefaHttpPage> createState() => _TarefaHttpPageState();
 }
 
-class _TarefaSQLitePageState extends State<TarefaSQLitePage> {
-  TarefaSQLiteRepository tarefaSQLiteRepository = TarefaSQLiteRepository();
-  var _tarefas = const <TarefaSQLiteModel>[];
+class _TarefaHttpPageState extends State<TarefaHttpPage> {
+  TarefasBack4AppRepository tarefaRepository = TarefasBack4AppRepository();
+  var _tarefasBack4App = TarefasBack4AppModel([]);
   var descricaoController = TextEditingController();
   var apenasNaoConcluidos = false;
+  var carregando = false;
 
   @override
   void initState() {
@@ -23,13 +24,21 @@ class _TarefaSQLitePageState extends State<TarefaSQLitePage> {
   }
 
   void obterTarefas() async {
-    _tarefas = await tarefaSQLiteRepository.obterDados(apenasNaoConcluidos);
-    setState(() {});
+    setState(() {
+      carregando = true;
+    });
+    _tarefasBack4App = await tarefaRepository.obterTarefas(apenasNaoConcluidos);
+    setState(() {
+      carregando = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text('Tarefas HTTP'),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             descricaoController.text = '';
@@ -50,8 +59,8 @@ class _TarefaSQLitePageState extends State<TarefaSQLitePage> {
                       ),
                       TextButton(
                         onPressed: () async {
-                          await tarefaSQLiteRepository.salvar(TarefaSQLiteModel(
-                              0, descricaoController.text, false));
+                          // await tarefaRepository.salvar(TarefaSQLiteModel(
+                          //     0, descricaoController.text, false));
                           Navigator.pop(context);
                           obterTarefas();
                           setState(() {});
@@ -86,31 +95,34 @@ class _TarefaSQLitePageState extends State<TarefaSQLitePage> {
                   ],
                 ),
               ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: _tarefas.length,
-                    itemBuilder: (BuildContext bc, int index) {
-                      var tarefa = _tarefas[index];
-                      return Dismissible(
-                        onDismissed: (DismissDirection dismissDirection) async {
-                          tarefaSQLiteRepository.remover(tarefa.id);
-                          obterTarefas();
-                        },
-                        key: Key(tarefa.descricao),
-                        child: ListTile(
-                          title: Text(tarefa.descricao),
-                          trailing: Switch(
-                            onChanged: (bool value) async {
-                              tarefa.concluido = value;
-                              tarefaSQLiteRepository.atualizar(tarefa);
-                              obterTarefas();
-                            },
-                            value: tarefa.concluido,
-                          ),
-                        ),
-                      );
-                    }),
-              ),
+              carregando
+                  ? const CircularProgressIndicator()
+                  : Expanded(
+                      child: ListView.builder(
+                          itemCount: _tarefasBack4App.tarefas.length,
+                          itemBuilder: (BuildContext bc, int index) {
+                            var tarefa = _tarefasBack4App.tarefas[index];
+                            return Dismissible(
+                              onDismissed:
+                                  (DismissDirection dismissDirection) async {
+                                // tarefaRepository.remover(tarefa.id);
+                                obterTarefas();
+                              },
+                              key: Key(tarefa.descricao),
+                              child: ListTile(
+                                title: Text(tarefa.descricao),
+                                trailing: Switch(
+                                  onChanged: (bool value) async {
+                                    tarefa.concluido = value;
+                                    // tarefaRepository.atualizar(tarefa);
+                                    obterTarefas();
+                                  },
+                                  value: tarefa.concluido,
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
             ],
           ),
         ));

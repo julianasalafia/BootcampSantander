@@ -4,6 +4,7 @@ import 'package:trilhaapp/pages/characters/characters_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/numeros_aleatorios/numeros_aleatorios_hive.dart';
 import 'package:trilhaapp/pages/posts_page.dart';
+import 'package:trilhaapp/pages/tarefa_page/tarefa_http_page.dart';
 import 'package:trilhaapp/repositories/back4app/tarefas_back4app_repository.dart';
 import '../../dados_cadastrais/dados_cadastrais_hive.dart';
 
@@ -222,15 +223,11 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 )),
             onTap: () async {
-              var tarefa = TarefasBack4AppRepository();
-              var tarefas = await tarefa.obterTarefas();
-              print(tarefas);
-
               Navigator.pop(context);
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (BuildContext bc) => const CharactersPage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext bc) => const TarefaHttpPage()));
             },
           ),
           const Divider(),

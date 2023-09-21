@@ -46,4 +46,11 @@ class TarefaBack4AppModel {
     data['updatedAt'] = updatedAt;
     return data;
   }
+
+  Map<String, dynamic> toJsonEndpoint() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['descricao'] = descricao;
+    data['concluido'] = concluido;
+    return data;
+  }
 }
