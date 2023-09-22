@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:trilhaapp/shared/widgets/custom_drawer.dart';
 
 class PercentIndicatorPage extends StatefulWidget {
   const PercentIndicatorPage({super.key});
