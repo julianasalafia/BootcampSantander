@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:trilhaapp/pages/login_page.dart';
-import '../../dados_cadastrais/dados_cadastrais_hive.dart';
+import 'package:trilhaapp/pages/percent_indicator/percent_indicator_page.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -58,12 +58,12 @@ class CustomDrawer extends StatelessWidget {
                 child: const Row(
                   children: [
                     FaIcon(
-                      FontAwesomeIcons.user,
+                      FontAwesomeIcons.percent,
                       color: Colors.pink,
                       size: 25,
                     ),
                     SizedBox(width: 10),
-                    Text('Opção 1'),
+                    Text('Indicador de porcentagem'),
                   ],
                 )),
             onTap: () {
@@ -71,11 +71,11 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DadosCadastraisHivePage()));
+                      builder: (context) => const PercentIndicatorPage()));
             },
           ),
-          Divider(),
-          SizedBox(height: 10),
+          const Divider(),
+          const SizedBox(height: 10),
           InkWell(
             child: Container(
                 padding:
@@ -98,11 +98,11 @@ class CustomDrawer extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      title: Text(
+                      title: const Text(
                         'Meu app',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      content: Wrap(
+                      content: const Wrap(
                         children: [
                           Text('Você sairá do aplicativo!'),
                           Text('Deseja realmente sair?'),
@@ -113,7 +113,7 @@ class CustomDrawer extends StatelessWidget {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('Não')),
+                            child: const Text('Não')),
                         TextButton(
                             onPressed: () {
                               Navigator.pushReplacement(
@@ -121,7 +121,7 @@ class CustomDrawer extends StatelessWidget {
                                   MaterialPageRoute(
                                       builder: (context) => LoginPage()));
                             },
-                            child: Text('Sim')),
+                            child: const Text('Sim')),
                       ],
                     );
                   });
