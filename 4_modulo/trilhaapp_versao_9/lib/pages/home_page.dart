@@ -1,6 +1,7 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trilhaapp/pages/brasil_fields/brasil_fields_page.dart';
 import 'package:trilhaapp/shared/widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,9 +45,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Container(
             color: Colors.green,
           ),
-          Container(
-            color: Colors.orange,
-          ),
+          const BrasilFieldsPage(),
         ],
       ),
       bottomNavigationBar: ConvexAppBar.badge(
@@ -69,7 +68,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             icon: Icons.message,
           ),
           TabItem(
-            title: 'Profile',
+            title: 'Brasil',
             icon: Icons.people,
           ),
         ],
