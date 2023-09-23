@@ -29,6 +29,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   convex_bottom_bar: ^3.2.0
   brasil_fields: ^1.14.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

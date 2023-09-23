@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:trilhaapp/pages/auto_size_text/auto_size_text_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/percent_indicator/percent_indicator_page.dart';
@@ -99,6 +101,41 @@ class CustomDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const AutoSizeTextPage()));
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.house,
+                      color: Colors.pink,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('INTL'),
+                  ],
+                )),
+            onTap: () async {
+              var f = NumberFormat('#,###.0#', 'en_US');
+              var fBR = NumberFormat('#,###.0#', 'pt_BR');
+              print(f.format(12345.345));
+              print(fBR.format(12345.345));
+
+              var data = DateTime(2023, 23, 09);
+              await initializeDateFormatting('en_US', null);
+              print(DateFormat('EEEEE', 'en_US').format(data));
+
+              await initializeDateFormatting('pt_BR', null);
+              print(DateFormat('EEEEE', 'pt_BR').format(data));
+
+              Intl.defaultLocale = 'pt_BR';
+              print(data.toString());
             },
           ),
           const Divider(),
