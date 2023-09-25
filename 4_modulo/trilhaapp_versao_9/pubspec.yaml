@@ -31,6 +31,7 @@ dependencies:
   brasil_fields: ^1.14.0
   intl: ^0.18.1
   battery_plus: ^4.0.2
+  url_launcher: ^6.1.14
 
 dev_dependencies:
   flutter_test:

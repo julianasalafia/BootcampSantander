@@ -6,6 +6,7 @@ import 'package:trilhaapp/pages/auto_size_text/auto_size_text_page.dart';
 import 'package:trilhaapp/pages/battery/battery_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/percent_indicator/percent_indicator_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -148,6 +149,75 @@ class CustomDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: const Row(
                   children: [
+                    FaIcon(
+                      FontAwesomeIcons.batteryHalf,
+                      color: Colors.pink,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Indicador da bateria'),
+                  ],
+                )),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const BatteryPage()));
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.chrome,
+                      color: Colors.pink,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Abrir no Google'),
+                  ],
+                )),
+            onTap: () async {
+              await launchUrl(Uri.parse('https://www.dio.me'));
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.chrome,
+                      color: Colors.pink,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Abrir no Google Maps'),
+                  ],
+                )),
+            onTap: () async {
+              await launchUrl(
+                  Uri.parse('google.navigation:q=Santos SP&mode=d'));
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
                     Icon(Icons.exit_to_app),
                     SizedBox(width: 10),
                     Text('Sair'),
@@ -190,30 +260,6 @@ class CustomDrawer extends StatelessWidget {
                       ],
                     );
                   });
-            },
-          ),
-          const Divider(),
-          const SizedBox(height: 10),
-          InkWell(
-            child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                width: double.infinity,
-                child: const Row(
-                  children: [
-                    FaIcon(
-                      FontAwesomeIcons.batteryHalf,
-                      color: Colors.pink,
-                      size: 25,
-                    ),
-                    SizedBox(width: 10),
-                    Text('Indicador da bateria'),
-                  ],
-                )),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const BatteryPage()));
             },
           ),
         ],
