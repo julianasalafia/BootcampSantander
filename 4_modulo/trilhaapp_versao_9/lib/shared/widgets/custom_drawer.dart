@@ -9,6 +9,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:trilhaapp/pages/auto_size_text/auto_size_text_page.dart';
 import 'package:trilhaapp/pages/battery/battery_page.dart';
+import 'package:trilhaapp/pages/connectivity_plus/connectivity_plus_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/percent_indicator/percent_indicator_page.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -332,6 +333,31 @@ class CustomDrawer extends StatelessWidget {
                 WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
                 print('Running on ${webBrowserInfo.userAgent}');
               }
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.wifi,
+                      color: Colors.pink,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Informações conexão'),
+                  ],
+                )),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ConnectivityPlusPage()));
             },
           ),
           const Divider(),
