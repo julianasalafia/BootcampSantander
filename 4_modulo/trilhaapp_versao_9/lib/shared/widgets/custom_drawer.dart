@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -298,6 +299,39 @@ class CustomDrawer extends StatelessWidget {
               print(buildNumber);
 
               print(Platform.operatingSystem);
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.robot,
+                      color: Colors.pink,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Informações dispositivo'),
+                  ],
+                )),
+            onTap: () async {
+              DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+              if (Platform.isAndroid) {
+                AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+                print('Running on ${androidInfo.model}');
+              } else if (Platform.isIOS) {
+                IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+                print('Running on ${iosInfo.utsname.machine}');
+              } else {
+                WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+                print('Running on ${webBrowserInfo.userAgent}');
+              }
             },
           ),
           const Divider(),
