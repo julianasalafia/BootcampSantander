@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:trilhaapp/pages/auto_size_text/auto_size_text_page.dart';
 import 'package:trilhaapp/pages/battery/battery_page.dart';
@@ -245,7 +246,7 @@ class CustomDrawer extends StatelessWidget {
                 child: const Row(
                   children: [
                     FaIcon(
-                      FontAwesomeIcons.shareNodes,
+                      FontAwesomeIcons.folderClosed,
                       color: Colors.pink,
                       size: 25,
                     ),
@@ -263,6 +264,40 @@ class CustomDrawer extends StatelessWidget {
               directory =
                   await path_provider.getApplicationDocumentsDirectory();
               print(directory.path);
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.circleInfo,
+                      color: Colors.pink,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Informações pacote'),
+                  ],
+                )),
+            onTap: () async {
+              PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+              String appName = packageInfo.appName;
+              String packageName = packageInfo.packageName;
+              String version = packageInfo.version;
+              String buildNumber = packageInfo.buildNumber;
+
+              print(appName);
+              print(packageName);
+              print(version);
+              print(buildNumber);
+
+              print(Platform.operatingSystem);
             },
           ),
           const Divider(),
