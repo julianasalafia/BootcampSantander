@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +10,7 @@ import 'package:trilhaapp/pages/battery/battery_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/percent_indicator/percent_indicator_page.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -230,6 +233,36 @@ class CustomDrawer extends StatelessWidget {
                 )),
             onTap: () {
               Share.share('check out my website https://dio.me');
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.shareNodes,
+                      color: Colors.pink,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Path'),
+                  ],
+                )),
+            onTap: () async {
+              var directory = await path_provider.getTemporaryDirectory();
+              print(directory.path);
+
+              directory = await path_provider.getApplicationSupportDirectory();
+              print(directory.path);
+
+              directory =
+                  await path_provider.getApplicationDocumentsDirectory();
+              print(directory.path);
             },
           ),
           const Divider(),
