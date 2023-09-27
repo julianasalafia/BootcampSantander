@@ -13,6 +13,7 @@ import 'package:trilhaapp/pages/connectivity_plus/connectivity_plus_page.dart';
 import 'package:trilhaapp/pages/gps/gps_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/percent_indicator/percent_indicator_page.dart';
+import 'package:trilhaapp/qr_code/qr_code_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
@@ -358,6 +359,31 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const GPSPage()),
+              );
+            },
+          ),
+          const Divider(),
+          const SizedBox(height: 10),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.qrcode,
+                      color: Colors.pink,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('QR Code'),
+                  ],
+                )),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const QrCodePage()),
               );
             },
           ),
