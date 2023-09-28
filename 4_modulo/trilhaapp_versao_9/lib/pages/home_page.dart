@@ -1,6 +1,5 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:trilhaapp/pages/brasil_fields/brasil_fields_page.dart';
 import 'package:trilhaapp/shared/widgets/custom_drawer.dart';
 
@@ -27,7 +26,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Text(
           'Meu App',
-          style: GoogleFonts.roboto(),
         ),
       ),
       body: TabBarView(

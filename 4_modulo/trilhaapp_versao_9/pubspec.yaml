@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  google_fonts: ^5.1.0
   shared_preferences: ^2.2.1
   hive: ^2.2.3
   path_provider: ^2.1.1
@@ -38,6 +37,8 @@ dependencies:
   connectivity_plus: ^4.0.2
   geolocator: ^10.1.0
   qr_code_scanner: ^1.0.1
+  image_picker: ^1.0.4
+  gallery_saver: ^2.3.2
 
 dev_dependencies:
   flutter_test:

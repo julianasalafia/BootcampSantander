@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:trilhaapp/pages/splash_screen/splash_screen_delay_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -7,11 +6,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primarySwatch: Colors.blue, textTheme: GoogleFonts.robotoTextTheme()),
-      home: const SplashScreenDelayPage(),
+      home: SplashScreenDelayPage(),
     );
   }
 }
