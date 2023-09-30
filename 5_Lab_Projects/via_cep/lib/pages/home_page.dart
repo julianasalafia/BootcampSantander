@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:via_cep/pages/cadastro_cep_page.dart';
+import 'package:via_cep/shared/app_colors.dart';
 
 import '../Model/cep_model.dart';
 import '../repository/cep_repository.dart';
@@ -30,49 +32,73 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('CEP')),
       body: Padding(
-        padding: const EdgeInsets.all(13.0),
+        padding: const EdgeInsets.all(15.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(right: 50.0, left: 50.0, top: 80.0),
+              child: Image.asset(
+                'assets/correios-logo.png',
+              ),
+            ),
+            TextField(
+              controller: cepController,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                hintText: '00000-000',
+                suffixIcon: GestureDetector(
+                  onTap: () async {
+                    _ceps = await getCeps();
+
+                    List<Cep> busca = _ceps.ceps
+                        .where((element) => element.cep == cepController.text)
+                        .toList();
+
+                    if (busca.isNotEmpty) {
+                      setState(() {
+                        endereco = 'CEP encontrado.';
+                      });
+                    } else {
+                      setState(() {
+                        endereco = 'CEP não encontrado.';
+                      });
+                    }
+                  },
+                  child: const Icon(Icons.search),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
             Column(
               children: [
-                const Text('Consultar CEP:'),
-                TextField(controller: cepController),
-                const SizedBox(height: 10),
-                Text(endereco),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                    child: Container(
-                  color: Colors.blue,
+                Text(
+                  endereco,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 18.0),
+                ),
+                const SizedBox(height: 15),
+                Container(
+                  width: 180,
+                  decoration: BoxDecoration(
+                    color: AppColors.blue,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
                   child: TextButton(
-                      onPressed: () async {
-                        _ceps = await getCeps();
-
-                        List<Cep> busca = _ceps.ceps
-                            .where(
-                                (element) => element.cep == cepController.text)
-                            .toList();
-
-                        if (busca.isNotEmpty) {
-                          setState(() {
-                            endereco = 'CEP consta na lista.';
-                          });
-                        } else {
-                          setState(() {
-                            endereco = 'CEP não consta.';
-                          });
-                        }
-                      },
-                      child: const Text(
-                        'Conferir!',
-                        style: TextStyle(color: Colors.white),
-                      )),
-                )),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const CadastroCepPage()));
+                    },
+                    child: const Text(
+                      'Cadastrar CEP',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
