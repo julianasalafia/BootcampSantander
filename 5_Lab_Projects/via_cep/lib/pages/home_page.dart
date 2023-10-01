@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:via_cep/pages/cadastro_cep_page.dart';
-import 'package:via_cep/shared/app_colors.dart';
 
 import '../Model/cep_model.dart';
 import '../repository/cep_repository.dart';
+import '../shared/app_colors.dart';
+import '../shared/custom_drawer.dart';
+import 'cadastro_cep_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,6 +33,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: AppColors.blue),
+      drawer: const CustomDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(

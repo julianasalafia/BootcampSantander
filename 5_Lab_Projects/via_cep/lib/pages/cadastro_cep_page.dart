@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:via_cep/pages/main_page.dart';
 
 import '../shared/app_colors.dart';
 
@@ -84,7 +85,13 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const MainPage()));
+                        },
                         child: const Text(
                           'Cadastrar',
                           style: TextStyle(color: Colors.white),
