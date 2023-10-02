@@ -48,9 +48,9 @@ class _MainPageState extends State<MainPage> {
               items: const [
                 BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
                 BottomNavigationBarItem(
-                    label: 'Cadastrar', icon: Icon(Icons.pin_drop)),
+                    label: 'Cadastrar', icon: Icon(Icons.app_registration)),
                 BottomNavigationBarItem(
-                    label: 'Cadastrados', icon: Icon(Icons.map)),
+                    label: 'Cadastrados', icon: Icon(Icons.apps)),
               ],
             ),
           ],
