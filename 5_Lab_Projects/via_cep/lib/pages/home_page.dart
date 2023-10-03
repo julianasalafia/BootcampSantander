@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CEPRepository cepRepository = CEPRepository();
   TextEditingController cepController = TextEditingController();
-  String endereco = '-';
+  List<String> endereco = [];
   CepModel _ceps = CepModel([]);
 
   @override
@@ -54,21 +54,7 @@ class _HomePageState extends State<HomePage> {
                 hintText: '00000-000',
                 suffixIcon: GestureDetector(
                   onTap: () async {
-                    _ceps = await getCeps();
-
-                    List<Cep> busca = _ceps.ceps
-                        .where((element) => element.cep == cepController.text)
-                        .toList();
-
-                    if (busca.isNotEmpty) {
-                      setState(() {
-                        endereco = 'CEP encontrado.';
-                      });
-                    } else {
-                      setState(() {
-                        endereco = 'CEP não encontrado.';
-                      });
-                    }
+                    // trazer dados do CEP
                   },
                   child: const Icon(Icons.search),
                 ),
@@ -78,7 +64,7 @@ class _HomePageState extends State<HomePage> {
             Column(
               children: [
                 Text(
-                  endereco,
+                  '$_ceps',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 18.0),
                 ),
