@@ -16,12 +16,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CEPRepository cepRepository = CEPRepository();
   TextEditingController cepController = TextEditingController();
-  List<String> endereco = [];
+  var endereco = '';
   CepModel _ceps = CepModel([]);
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getCeps();
   }
@@ -48,13 +47,25 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             TextField(
+              keyboardType: TextInputType.number,
               controller: cepController,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 hintText: '00000-000',
                 suffixIcon: GestureDetector(
                   onTap: () async {
-                    // trazer dados do CEP
+                    Iterable<Cep> listaCEPS = _ceps.ceps
+                        .where((element) => element.cep == cepController.text)
+                        .toList();
+
+                    var infoCEP = listaCEPS
+                        .map((e) =>
+                            '${e.cep} \n${e.bairro} \n${e.logradouro} \n${e.cidade} - ${e.estado}')
+                        .join();
+
+                    setState(() {
+                      endereco = infoCEP;
+                    });
                   },
                   child: const Icon(Icons.search),
                 ),
@@ -64,11 +75,12 @@ class _HomePageState extends State<HomePage> {
             Column(
               children: [
                 Text(
-                  '$_ceps',
+                  endereco,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 18.0),
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 30),
                 Container(
                   width: 180,
                   decoration: BoxDecoration(

@@ -43,13 +43,6 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
               const TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Complemento',
-                ),
-              ),
-              const SizedBox(height: 15),
-              const TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
                   labelText: 'Bairro',
                 ),
               ),

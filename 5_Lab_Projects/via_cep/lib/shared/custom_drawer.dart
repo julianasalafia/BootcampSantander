@@ -33,7 +33,7 @@ class CustomDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushReplacement(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const MainPage()));
             },
           ),
@@ -54,7 +54,7 @@ class CustomDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const CadastroCepPage()));
