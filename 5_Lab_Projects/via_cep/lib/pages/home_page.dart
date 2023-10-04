@@ -66,6 +66,10 @@ class _HomePageState extends State<HomePage> {
                     setState(() {
                       endereco = infoCEP;
                     });
+
+                    if (endereco == '') {
+                      endereco = 'CEP não cadastrado';
+                    }
                   },
                   child: const Icon(Icons.search),
                 ),
