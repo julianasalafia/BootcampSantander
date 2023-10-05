@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import '../Model/cep_model.dart';
 import '../repository/cep_repository.dart';
 import '../shared/app_colors.dart';
@@ -47,6 +47,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             TextField(
+              inputFormatters: [
+                CepInputFormatter(),
+              ],
               keyboardType: TextInputType.number,
               controller: cepController,
               decoration: InputDecoration(
@@ -110,5 +113,24 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+}
+
+class CepInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (oldValue.text == newValue.text) {
+      return newValue;
+    }
+
+    String nValue = newValue.text.replaceAll('-', '');
+    String sub = nValue.substring(0, nValue.length > 5 ? 5 : nValue.length);
+    if (nValue.length > 5) {
+      sub += '-${nValue.substring(5)}';
+    }
+
+    return newValue.copyWith(
+        text: sub, selection: TextSelection.collapsed(offset: sub.length));
   }
 }
