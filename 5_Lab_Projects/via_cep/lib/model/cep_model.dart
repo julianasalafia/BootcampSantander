@@ -26,7 +26,7 @@ class Cep {
   String createdAt = '';
   String updatedAt = '';
   String logradouro = '';
-  String complemento = 'n/a';
+  String complemento = '';
   String bairro = '';
   String cidade = '';
   String estado = '';

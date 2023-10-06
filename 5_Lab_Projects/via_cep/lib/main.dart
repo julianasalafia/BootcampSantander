@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:via_cep/pages/main_page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {

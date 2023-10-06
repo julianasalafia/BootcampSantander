@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../Model/cep_model.dart';
 import '../core/formatter/cep_input_formatter.dart';
 import '../repository/cep_repository.dart';

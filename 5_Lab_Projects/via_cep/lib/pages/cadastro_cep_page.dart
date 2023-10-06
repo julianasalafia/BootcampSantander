@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:via_cep/core/formatter/cep_input_formatter.dart';
-import '../Model/cep_model.dart';
 import '../repository/cep_repository.dart';
 import '../shared/app_colors.dart';
+import 'main_page.dart';
 
 class CadastroCepPage extends StatefulWidget {
   const CadastroCepPage({super.key});
@@ -18,8 +18,27 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
   TextEditingController cidadeController = TextEditingController();
   TextEditingController ufController = TextEditingController();
   CEPRepository cepRepository = CEPRepository();
-  List<String> cepInfo = [];
   late bool isRegistered;
+
+  void getDialogResponse() {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: const Text('Sucesso!'),
+            content: const Text('Cadastro efetuado com sucesso.'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (_) => MainPage()));
+                  },
+                  child: const Text('Ok')),
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,11 +125,8 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
                             cidadeController.text,
                             ufController.text,
                           );
-                          // Navigator.pop(context);
-                          // Navigator.pushReplacement(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (_) => const MainPage()));
+
+                          getDialogResponse();
                         },
                         child: const Text(
                           'Cadastrar',
