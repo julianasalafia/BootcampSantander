@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:via_cep/pages/main_page.dart';
-
+import 'package:via_cep/core/formatter/cep_input_formatter.dart';
+import '../Model/cep_model.dart';
+import '../repository/cep_repository.dart';
 import '../shared/app_colors.dart';
 
 class CadastroCepPage extends StatefulWidget {
@@ -11,6 +12,15 @@ class CadastroCepPage extends StatefulWidget {
 }
 
 class _CadastroCepPageState extends State<CadastroCepPage> {
+  TextEditingController cepController = TextEditingController();
+  TextEditingController logradouroController = TextEditingController();
+  TextEditingController bairroController = TextEditingController();
+  TextEditingController cidadeController = TextEditingController();
+  TextEditingController ufController = TextEditingController();
+  CEPRepository cepRepository = CEPRepository();
+  List<String> cepInfo = [];
+  late bool isRegistered;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,39 +38,48 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
                     right: 50.0, left: 50.0, top: 50.0, bottom: 80.0),
                 child: Image.asset('assets/correios-logo.png'),
               ),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                inputFormatters: [
+                  CepInputFormatter(),
+                ],
+                keyboardType: TextInputType.number,
+                controller: cepController,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'CEP',
                 ),
               ),
               const SizedBox(height: 15),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: logradouroController,
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(), labelText: 'Logradouro'),
               ),
               const SizedBox(height: 15),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: bairroController,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Bairro',
                 ),
               ),
               const SizedBox(height: 15),
-              const Row(
+              Row(
                 children: [
                   Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: cidadeController,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Cidade',
                       ),
                     ),
                   ),
-                  SizedBox(width: 15.0),
+                  const SizedBox(width: 15.0),
                   Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: ufController,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'UF',
                       ),
@@ -78,12 +97,20 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const MainPage()));
+                        onPressed: () async {
+                          await cepRepository.create(
+                            true,
+                            cepController.text,
+                            logradouroController.text,
+                            bairroController.text,
+                            cidadeController.text,
+                            ufController.text,
+                          );
+                          // Navigator.pop(context);
+                          // Navigator.pushReplacement(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (_) => const MainPage()));
                         },
                         child: const Text(
                           'Cadastrar',

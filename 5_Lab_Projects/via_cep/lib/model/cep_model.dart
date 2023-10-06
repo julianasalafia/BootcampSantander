@@ -26,7 +26,7 @@ class Cep {
   String createdAt = '';
   String updatedAt = '';
   String logradouro = '';
-  String complemento = '';
+  String complemento = 'n/a';
   String bairro = '';
   String cidade = '';
   String estado = '';
@@ -57,17 +57,17 @@ class Cep {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['objectId'] = objectId;
-    data['cep'] = cep;
-    data['isRegistered'] = isRegistered;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['logradouro'] = logradouro;
-    data['complemento'] = complemento;
-    data['bairro'] = bairro;
-    data['cidade'] = cidade;
-    data['estado'] = estado;
-    return data;
+    return {
+      'objectId': objectId,
+      'isRegistered': isRegistered,
+      'cep': cep,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'logradouro': logradouro,
+      'complemento': complemento,
+      'bairro': bairro,
+      'cidade': cidade,
+      'estado': estado,
+    };
   }
 }
