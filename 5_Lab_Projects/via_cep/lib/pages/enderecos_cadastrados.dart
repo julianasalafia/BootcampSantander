@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:via_cep/pages/main_page.dart';
-
 import '../shared/app_colors.dart';
 
 class EnderecosCadastradosPage extends StatefulWidget {

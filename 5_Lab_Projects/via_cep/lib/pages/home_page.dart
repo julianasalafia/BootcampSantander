@@ -3,18 +3,18 @@ import '../Model/cep_model.dart';
 import '../core/formatter/cep_input_formatter.dart';
 import '../repository/cep_repository.dart';
 import '../shared/app_colors.dart';
-import '../shared/custom_drawer.dart';
-import 'cadastro_cep_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final CEPRepository cepRepository;
+  final VoidCallback onPageChanged;
+  const HomePage(
+      {super.key, required this.cepRepository, required this.onPageChanged});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  CEPRepository cepRepository = CEPRepository();
   TextEditingController cepController = TextEditingController();
   var endereco = '';
   CepModel _ceps = CepModel([]);
@@ -26,14 +26,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<CepModel> getCeps() async {
-    return _ceps = await cepRepository.get();
+    return _ceps = await widget.cepRepository.get();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: AppColors.blue),
-      drawer: const CustomDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -95,12 +94,7 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const CadastroCepPage()));
-                    },
+                    onPressed: widget.onPageChanged,
                     child: const Text(
                       'Cadastrar CEP',
                       style: TextStyle(color: Colors.white),

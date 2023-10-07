@@ -4,36 +4,51 @@ import 'package:via_cep/pages/enderecos_cadastrados.dart';
 import 'package:via_cep/pages/home_page.dart';
 import 'package:via_cep/shared/app_colors.dart';
 import 'package:via_cep/shared/custom_drawer.dart';
+import '../repository/cep_repository.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final CEPRepository cepRepository;
+  const MainPage({super.key, required this.cepRepository});
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  int pagePosition = 0;
   PageController controller = PageController(initialPage: 0);
+  int page = 0;
+
+  void onSelectedPage(int pageIndex) {
+    controller.animateToPage(pageIndex,
+        duration: const Duration(milliseconds: 600), curve: Curves.decelerate);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      setState(() {
+        page = controller.page?.toInt() ?? 0;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: const CustomDrawer(),
+        drawer: CustomDrawer(onSelectedPage: onSelectedPage),
         body: Column(
           children: [
             Expanded(
               child: PageView(
                 controller: controller,
-                onPageChanged: (value) {
-                  setState(() {
-                    pagePosition = value;
-                  });
-                },
-                children: const [
-                  HomePage(),
-                  CadastroCepPage(),
+                children: [
+                  HomePage(
+                    cepRepository: widget.cepRepository,
+                    onPageChanged: () => onSelectedPage(1),
+                  ),
+                  CadastroCepPage(cepRepository: widget.cepRepository),
                   EnderecosCadastradosPage(),
                 ],
               ),
@@ -44,7 +59,7 @@ class _MainPageState extends State<MainPage> {
               onTap: (value) {
                 controller.jumpToPage(value);
               },
-              currentIndex: pagePosition,
+              currentIndex: page,
               items: const [
                 BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
                 BottomNavigationBarItem(

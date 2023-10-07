@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:via_cep/pages/cadastro_cep_page.dart';
-import 'package:via_cep/pages/enderecos_cadastrados.dart';
-import 'package:via_cep/pages/main_page.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({super.key});
+  final Function(int) onSelectedPage;
+  const CustomDrawer({super.key, required this.onSelectedPage});
 
   @override
   Widget build(BuildContext context) {
@@ -33,33 +31,29 @@ class CustomDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const MainPage()));
+              onSelectedPage(0);
             },
           ),
           InkWell(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              width: double.infinity,
-              child: const Row(
-                children: [
-                  Icon(
-                    Icons.pin_drop,
-                    size: 25,
-                  ),
-                  SizedBox(width: 10),
-                  Text('Cadastrar CEP'),
-                ],
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                width: double.infinity,
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.pin_drop,
+                      size: 25,
+                    ),
+                    SizedBox(width: 10),
+                    Text('Cadastrar CEP'),
+                  ],
+                ),
               ),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CadastroCepPage()));
-            },
-          ),
+              onTap: () {
+                Navigator.pop(context);
+                onSelectedPage(1);
+              }),
           InkWell(
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -77,10 +71,7 @@ class CustomDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const EnderecosCadastradosPage()));
+              onSelectedPage(2);
             },
           ),
         ],

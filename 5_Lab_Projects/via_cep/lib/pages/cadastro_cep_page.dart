@@ -3,10 +3,10 @@ import 'package:via_cep/Model/cep_model.dart';
 import 'package:via_cep/core/formatter/cep_input_formatter.dart';
 import '../repository/cep_repository.dart';
 import '../shared/app_colors.dart';
-import 'main_page.dart';
 
 class CadastroCepPage extends StatefulWidget {
-  const CadastroCepPage({super.key});
+  final CEPRepository cepRepository;
+  const CadastroCepPage({super.key, required this.cepRepository});
 
   @override
   State<CadastroCepPage> createState() => _CadastroCepPageState();
@@ -18,11 +18,10 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
   TextEditingController bairroController = TextEditingController();
   TextEditingController cidadeController = TextEditingController();
   TextEditingController ufController = TextEditingController();
-  CEPRepository cepRepository = CEPRepository();
   List<Cep> cepList = [];
 
   void getListaCeps() async {
-    List<Cep> lista = await cepRepository.getLista();
+    List<Cep> lista = await widget.cepRepository.getLista();
     setState(() {
       cepList.addAll(lista);
     });
@@ -50,8 +49,6 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (_) => MainPage()));
                   },
                   child: const Text('Ok')),
             ],
@@ -162,7 +159,7 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
                                 bairroController.text.isNotEmpty &&
                                 cidadeController.text.isNotEmpty &&
                                 ufController.text.isNotEmpty) {
-                              await cepRepository.create(
+                              await widget.cepRepository.create(
                                 cepController.text,
                                 logradouroController.text,
                                 bairroController.text,

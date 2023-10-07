@@ -1,22 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:via_cep/pages/main_page.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:via_cep/app_module.dart';
+import 'package:via_cep/app_widget.dart';
 
 void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MainPage(),
-    );
-  }
+  runApp(ModularApp(module: AppModule(), child: const AppWidget()));
 }
