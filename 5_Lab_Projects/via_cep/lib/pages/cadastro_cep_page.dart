@@ -147,7 +147,21 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
                           }
 
                           if (cep == '()') {
-                            if (cep != cepController.text) {
+                            if (cepController.text.isEmpty ||
+                                logradouroController.text.isEmpty ||
+                                bairroController.text.isEmpty ||
+                                cidadeController.text.isEmpty ||
+                                ufController.text.isEmpty) {
+                              getDialogResponse('Aviso!',
+                                  'Preencha todos os campos para efetuar o cadastro.');
+                            }
+
+                            if (cep != cepController.text &&
+                                cepController.text.isNotEmpty &&
+                                logradouroController.text.isNotEmpty &&
+                                bairroController.text.isNotEmpty &&
+                                cidadeController.text.isNotEmpty &&
+                                ufController.text.isNotEmpty) {
                               await cepRepository.create(
                                 cepController.text,
                                 logradouroController.text,
