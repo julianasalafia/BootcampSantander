@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:via_cep/Model/cep_model.dart';
 import 'package:via_cep/core/formatter/cep_input_formatter.dart';
 import '../repository/cep_repository.dart';
 import '../shared/app_colors.dart';
@@ -18,16 +19,34 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
   TextEditingController cidadeController = TextEditingController();
   TextEditingController ufController = TextEditingController();
   CEPRepository cepRepository = CEPRepository();
-  late bool isRegistered;
+  List<Cep> cepList = [];
 
-  void getDialogResponse() {
+  void getListaCeps() async {
+    List<Cep> lista = await cepRepository.getLista();
+    setState(() {
+      cepList.addAll(lista);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getListaCeps();
+  }
+
+  void getDialogResponse(String titulo, String descricao) {
     showDialog(
         context: context,
         builder: (_) {
           return AlertDialog(
-            title: const Text('Sucesso!'),
-            content: const Text('Cadastro efetuado com sucesso.'),
+            title: Text(titulo),
+            content: Text(descricao),
             actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Tentar novamente')),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -117,16 +136,34 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
                       ),
                       child: TextButton(
                         onPressed: () async {
-                          await cepRepository.create(
-                            true,
-                            cepController.text,
-                            logradouroController.text,
-                            bairroController.text,
-                            cidadeController.text,
-                            ufController.text,
-                          );
+                          String cep = cepList
+                              .where((element) =>
+                                  element.cep == cepController.text)
+                              .toString();
 
-                          getDialogResponse();
+                          if (cep != '()') {
+                            getDialogResponse('Falha no cadastro',
+                                'O CEP digitado já está cadastrado na base de dados. Por favor, insira um novo CEP ou verifique os dados.');
+                          }
+
+                          if (cep == '()') {
+                            if (cep != cepController.text) {
+                              await cepRepository.create(
+                                cepController.text,
+                                logradouroController.text,
+                                bairroController.text,
+                                cidadeController.text,
+                                ufController.text,
+                              );
+
+                              setState(() {
+                                getListaCeps();
+                              });
+
+                              getDialogResponse('Sucesso',
+                                  'O CEP foi cadastrado com sucesso! Você pode agora prosseguir com as próximas etapas.');
+                            }
+                          }
                         },
                         child: const Text(
                           'Cadastrar',

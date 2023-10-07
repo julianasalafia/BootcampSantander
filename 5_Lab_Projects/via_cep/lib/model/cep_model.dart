@@ -20,16 +20,16 @@ class CepModel {
 }
 
 class Cep {
-  String objectId = '';
-  String cep = '';
-  bool isRegistered = false;
-  String createdAt = '';
-  String updatedAt = '';
-  String logradouro = '';
-  String complemento = '';
-  String bairro = '';
-  String cidade = '';
-  String estado = '';
+  String? objectId;
+  String? cep;
+  bool? isRegistered;
+  String? createdAt;
+  String? updatedAt;
+  String? logradouro;
+  String? complemento;
+  String? bairro;
+  String? cidade;
+  String? estado;
 
   Cep(
       this.objectId,
@@ -43,17 +43,19 @@ class Cep {
       this.cidade,
       this.estado);
 
-  Cep.fromJson(Map<String, dynamic> json) {
-    objectId = json['objectId'];
-    cep = json['cep'];
-    isRegistered = json['isRegistered'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    logradouro = json['logradouro'];
-    complemento = json['complemento'];
-    bairro = json['bairro'];
-    cidade = json['cidade'];
-    estado = json['estado'];
+  factory Cep.fromJson(Map<String, dynamic> json) {
+    return Cep(
+      json['objectId'] ?? '',
+      json['cep'] ?? '',
+      json['isRegistered'] ?? false,
+      json['createdAt'] ?? '',
+      json['updatedAt'] ?? '',
+      json['logradouro'] ?? '',
+      json['complemento'] ?? '',
+      json['bairro'] ?? '',
+      json['cidade'] ?? '',
+      json['estado'] ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {

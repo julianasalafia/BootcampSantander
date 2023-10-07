@@ -20,8 +20,13 @@ class CEPRepository {
     return CepModel.fromJson(result.data);
   }
 
+  Future<List<Cep>> getLista() async {
+    var result = await _dio.get('/CEP');
+    List<dynamic> data = result.data['results'];
+    return (data).map((e) => Cep.fromJson(e)).toList();
+  }
+
   Future<void> create(
-    bool isRegistered,
     String cep,
     String logradouro,
     String bairro,
@@ -29,7 +34,6 @@ class CEPRepository {
     String estado,
   ) async {
     var response = await _dio.post('/CEP', data: {
-      'isRegistered': isRegistered,
       'cep': cep,
       'logradouro': logradouro,
       'bairro': bairro,
