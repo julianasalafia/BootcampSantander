@@ -4,11 +4,16 @@ import 'package:via_cep/pages/enderecos_cadastrados.dart';
 import 'package:via_cep/pages/home_page.dart';
 import 'package:via_cep/shared/app_colors.dart';
 import 'package:via_cep/shared/custom_drawer.dart';
+import 'package:via_cep/store/enderecos_cadastrados_store.dart';
 import '../repository/cep_repository.dart';
 
 class MainPage extends StatefulWidget {
   final CEPRepository cepRepository;
-  const MainPage({super.key, required this.cepRepository});
+  final EnderecosCadastradosStore enderecosCadastradosStore;
+  const MainPage(
+      {super.key,
+      required this.cepRepository,
+      required this.enderecosCadastradosStore});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -26,11 +31,21 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    controller.addListener(() {
-      setState(() {
-        page = controller.page?.toInt() ?? 0;
-      });
+    widget.enderecosCadastradosStore.getCeps();
+
+    controller.addListener(_enderecosCadastroListener);
+  }
+
+  void _enderecosCadastroListener() {
+    setState(() {
+      page = controller.page?.toInt() ?? 0;
     });
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(_enderecosCadastroListener);
+    super.dispose();
   }
 
   @override
@@ -49,7 +64,9 @@ class _MainPageState extends State<MainPage> {
                     onPageChanged: () => onSelectedPage(1),
                   ),
                   CadastroCepPage(cepRepository: widget.cepRepository),
-                  EnderecosCadastradosPage(),
+                  EnderecosCadastradosPage(
+                    enderecosCadastradosStore: widget.enderecosCadastradosStore,
+                  ),
                 ],
               ),
             ),
