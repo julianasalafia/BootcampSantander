@@ -59,10 +59,6 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cadastro de endereço'),
-        backgroundColor: AppColors.blue,
-      ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(

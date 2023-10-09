@@ -42,16 +42,33 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  @override
-  void dispose() {
-    controller.removeListener(_enderecosCadastroListener);
-    super.dispose();
+  String setAppBarTitle(int page) {
+    late String appBarTitle;
+
+    switch (page) {
+      case 0:
+        appBarTitle = 'Página Inicial';
+        break;
+      case 1:
+        appBarTitle = 'Cadastro de Endereço';
+        break;
+      case 2:
+        appBarTitle = 'Endereços Cadastrados';
+        break;
+      default:
+        '';
+    }
+    return appBarTitle;
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(setAppBarTitle(page)),
+          backgroundColor: AppColors.blue,
+        ),
         drawer: CustomDrawer(onSelectedPage: onSelectedPage),
         body: Column(
           children: [

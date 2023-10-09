@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:via_cep/store/enderecos_cadastrados_store.dart';
-import '../shared/app_colors.dart';
 
 class EnderecosCadastradosPage extends StatefulWidget {
   final EnderecosCadastradosStore enderecosCadastradosStore;
@@ -16,10 +15,6 @@ class _EnderecosCadastradosPageState extends State<EnderecosCadastradosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Endereços cadastrados'),
-        backgroundColor: AppColors.blue,
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

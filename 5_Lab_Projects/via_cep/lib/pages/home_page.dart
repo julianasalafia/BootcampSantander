@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: AppColors.blue),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
