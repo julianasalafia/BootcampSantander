@@ -39,6 +39,7 @@ class _MainPageState extends State<MainPage> {
   void _enderecosCadastroListener() {
     setState(() {
       page = controller.page?.toInt() ?? 0;
+      widget.enderecosCadastradosStore.getCeps();
     });
   }
 
@@ -83,6 +84,7 @@ class _MainPageState extends State<MainPage> {
                   CadastroCepPage(cepRepository: widget.cepRepository),
                   EnderecosCadastradosPage(
                     enderecosCadastradosStore: widget.enderecosCadastradosStore,
+                    cepRepository: widget.cepRepository,
                   ),
                 ],
               ),

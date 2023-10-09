@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:via_cep/store/enderecos_cadastrados_store.dart';
+import '../repository/cep_repository.dart';
 
 class EnderecosCadastradosPage extends StatefulWidget {
+  final CEPRepository cepRepository;
   final EnderecosCadastradosStore enderecosCadastradosStore;
-  const EnderecosCadastradosPage(
-      {super.key, required this.enderecosCadastradosStore});
+  const EnderecosCadastradosPage({
+    super.key,
+    required this.enderecosCadastradosStore,
+    required this.cepRepository,
+  });
 
   @override
   State<EnderecosCadastradosPage> createState() =>
@@ -71,7 +76,15 @@ class _EnderecosCadastradosPageState extends State<EnderecosCadastradosPage> {
                                               color: Colors.grey,
                                             )),
                                         IconButton(
-                                            onPressed: () {},
+                                            onPressed: () async {
+                                              await widget.cepRepository
+                                                  .delete(cep.objectId);
+
+                                              setState(() {
+                                                widget.enderecosCadastradosStore
+                                                    .getCeps();
+                                              });
+                                            },
                                             icon: const Icon(
                                               Icons.delete,
                                               color: Colors.grey,

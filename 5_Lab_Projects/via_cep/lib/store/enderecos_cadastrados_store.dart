@@ -27,7 +27,7 @@ class EnderecosCadastradosStore
   Future<void> getCeps() async {
     value = value.copyWith(isLoading: true);
 
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 1));
 
     final ceps = await cepRepository.getLista();
     value = value.copyWith(ceps: ceps, isLoading: false);

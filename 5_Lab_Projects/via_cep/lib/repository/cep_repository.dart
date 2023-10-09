@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-
 import '../Model/cep_model.dart';
 
 class CEPRepository {
@@ -41,5 +40,13 @@ class CEPRepository {
       'estado': estado,
     });
     return response.data;
+  }
+
+  Future<void> delete(String? objectId) async {
+    try {
+      await _dio.delete('/CEP/$objectId');
+    } catch (e) {
+      rethrow;
+    }
   }
 }
