@@ -6,7 +6,8 @@ import '../shared/app_colors.dart';
 
 class CadastroCepPage extends StatefulWidget {
   final CEPRepository cepRepository;
-  const CadastroCepPage({super.key, required this.cepRepository});
+  final Cep? cep;
+  const CadastroCepPage({super.key, required this.cepRepository, this.cep});
 
   @override
   State<CadastroCepPage> createState() => _CadastroCepPageState();
@@ -30,10 +31,23 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.cep != null) {
+      final cepUser = widget.cep;
+      cepController.text = cepUser?.cep ?? '';
+      logradouroController.text = cepUser?.logradouro ?? '';
+      bairroController.text = cepUser?.bairro ?? '';
+      cidadeController.text = cepUser?.cidade ?? '';
+      ufController.text = cepUser?.estado ?? '';
+    }
     getListaCeps();
   }
 
-  void getDialogResponse(String titulo, String descricao) {
+  void getDialogResponse({
+    required String titulo,
+    required String descricao,
+    bool isEdit = false,
+  }) {
     showDialog(
         context: context,
         builder: (_) {
@@ -48,6 +62,7 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
                   child: const Text('Tentar novamente')),
               TextButton(
                   onPressed: () {
+                    if (isEdit) Navigator.pop(context);
                     Navigator.pop(context);
                   },
                   child: const Text('Ok')),
@@ -59,6 +74,12 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: widget.cep != null
+          ? AppBar(
+              title: const Text('Atualizar cadastro'),
+              backgroundColor: AppColors.blue,
+            )
+          : null,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(
@@ -129,52 +150,73 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
                       ),
                       child: TextButton(
                         onPressed: () async {
-                          String cep = cepList
+                          final cep = cepList
                               .where((element) =>
                                   element.cep == cepController.text)
-                              .toString();
+                              .toList();
 
-                          if (cep != '()') {
-                            getDialogResponse('Falha no cadastro',
-                                'O CEP digitado já está cadastrado na base de dados. Por favor, insira um novo CEP ou verifique os dados.');
+                          if (cep.isNotEmpty && widget.cep == null) {
+                            getDialogResponse(
+                              titulo: 'Falha no cadastro',
+                              descricao:
+                                  'O CEP digitado já está cadastrado na base de dados. Por favor, insira um novo CEP ou verifique os dados.',
+                            );
+                            return;
                           }
 
-                          if (cep == '()') {
-                            if (cepController.text.isEmpty ||
-                                logradouroController.text.isEmpty ||
-                                bairroController.text.isEmpty ||
-                                cidadeController.text.isEmpty ||
-                                ufController.text.isEmpty) {
-                              getDialogResponse('Aviso!',
-                                  'Preencha todos os campos para efetuar o cadastro.');
-                            }
-
-                            if (cep != cepController.text &&
-                                cepController.text.isNotEmpty &&
-                                logradouroController.text.isNotEmpty &&
-                                bairroController.text.isNotEmpty &&
-                                cidadeController.text.isNotEmpty &&
-                                ufController.text.isNotEmpty) {
-                              await widget.cepRepository.create(
-                                cepController.text,
-                                logradouroController.text,
-                                bairroController.text,
-                                cidadeController.text,
-                                ufController.text,
-                              );
-
-                              setState(() {
-                                getListaCeps();
-                              });
-
-                              getDialogResponse('Sucesso',
-                                  'O CEP foi cadastrado com sucesso! Você pode agora prosseguir com as próximas etapas.');
-                            }
+                          if (cepController.text.isEmpty ||
+                              logradouroController.text.isEmpty ||
+                              bairroController.text.isEmpty ||
+                              cidadeController.text.isEmpty ||
+                              ufController.text.isEmpty) {
+                            getDialogResponse(
+                              titulo: 'Aviso!',
+                              descricao:
+                                  'Preencha todos os campos para efetuar o cadastro.',
+                            );
+                            return;
                           }
+
+                          if (widget.cep == null) {
+                            await widget.cepRepository.create(
+                              cepController.text,
+                              logradouroController.text,
+                              bairroController.text,
+                              cidadeController.text,
+                              ufController.text,
+                            );
+
+                            getDialogResponse(
+                              titulo: 'Sucesso',
+                              descricao:
+                                  'O CEP foi cadastrado com sucesso! Você pode agora prosseguir com as próximas etapas.',
+                            );
+                          } else {
+                            await widget.cepRepository.update(
+                              cep: cepController.text,
+                              logradouro: logradouroController.text,
+                              bairro: bairroController.text,
+                              cidade: cidadeController.text,
+                              estado: ufController.text,
+                              objectId: widget.cep!.objectId,
+                            );
+
+                            getDialogResponse(
+                              titulo: 'Sucesso',
+                              descricao:
+                                  'O CEP foi atualizado com sucesso! Você pode agora prosseguir com as próximas etapas.',
+                              isEdit: true,
+                            );
+                          }
+                          setState(() {
+                            getListaCeps();
+                          });
                         },
-                        child: const Text(
-                          'Cadastrar',
-                          style: TextStyle(color: Colors.white),
+                        child: Text(
+                          widget.cep == null
+                              ? 'Cadastrar'
+                              : 'Atualizar Cadastro',
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
                     ),

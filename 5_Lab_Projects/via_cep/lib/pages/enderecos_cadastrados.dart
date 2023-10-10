@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:via_cep/Model/cep_model.dart';
 import 'package:via_cep/store/enderecos_cadastrados_store.dart';
 import '../repository/cep_repository.dart';
 
 class EnderecosCadastradosPage extends StatefulWidget {
+  final Function(Cep) onCepEdit;
   final CEPRepository cepRepository;
   final EnderecosCadastradosStore enderecosCadastradosStore;
   const EnderecosCadastradosPage({
     super.key,
     required this.enderecosCadastradosStore,
     required this.cepRepository,
+    required this.onCepEdit,
   });
 
   @override
@@ -70,7 +73,8 @@ class _EnderecosCadastradosPageState extends State<EnderecosCadastradosPage> {
                                     Row(
                                       children: [
                                         IconButton(
-                                            onPressed: () {},
+                                            onPressed: () =>
+                                                widget.onCepEdit(cep),
                                             icon: const Icon(
                                               Icons.edit,
                                               color: Colors.grey,

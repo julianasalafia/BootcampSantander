@@ -42,7 +42,25 @@ class CEPRepository {
     return response.data;
   }
 
-  Future<void> delete(String? objectId) async {
+  Future<void> update({
+    required String cep,
+    required String logradouro,
+    required String bairro,
+    required String cidade,
+    required String estado,
+    required String objectId,
+  }) async {
+    var response = await _dio.put('/CEP/$objectId', data: {
+      'cep': cep,
+      'logradouro': logradouro,
+      'bairro': bairro,
+      'cidade': cidade,
+      'estado': estado,
+    });
+    return response.data;
+  }
+
+  Future<void> delete(String objectId) async {
     try {
       await _dio.delete('/CEP/$objectId');
     } catch (e) {

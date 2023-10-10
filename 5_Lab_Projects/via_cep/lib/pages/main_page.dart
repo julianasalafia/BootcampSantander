@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:via_cep/Model/cep_model.dart';
 import 'package:via_cep/pages/cadastro_cep_page.dart';
 import 'package:via_cep/pages/enderecos_cadastrados.dart';
 import 'package:via_cep/pages/home_page.dart';
@@ -23,9 +25,15 @@ class _MainPageState extends State<MainPage> {
   PageController controller = PageController(initialPage: 0);
   int page = 0;
 
-  void onSelectedPage(int pageIndex) {
+  void onSelectPage(int pageIndex) {
     controller.animateToPage(pageIndex,
         duration: const Duration(milliseconds: 600), curve: Curves.decelerate);
+  }
+
+  Future<void> onCepEdit(Cep cep) async {
+    await Modular.to.pushNamed('/editar', arguments: cep);
+
+    onSelectPage(0);
   }
 
   @override
@@ -70,7 +78,7 @@ class _MainPageState extends State<MainPage> {
           title: Text(setAppBarTitle(page)),
           backgroundColor: AppColors.blue,
         ),
-        drawer: CustomDrawer(onSelectedPage: onSelectedPage),
+        drawer: CustomDrawer(onSelectedPage: onSelectPage),
         body: Column(
           children: [
             Expanded(
@@ -79,12 +87,13 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   HomePage(
                     cepRepository: widget.cepRepository,
-                    onPageChanged: () => onSelectedPage(1),
+                    onPageChanged: () => onSelectPage(1),
                   ),
                   CadastroCepPage(cepRepository: widget.cepRepository),
                   EnderecosCadastradosPage(
                     enderecosCadastradosStore: widget.enderecosCadastradosStore,
                     cepRepository: widget.cepRepository,
+                    onCepEdit: onCepEdit,
                   ),
                 ],
               ),
