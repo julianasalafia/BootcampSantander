@@ -42,8 +42,25 @@ class NewContactForm extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: [],
+      body: const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.person_outline),
+                SizedBox(width: 15),
+                Expanded(
+                  child: TextField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), labelText: 'Name')),
+                ),
+                SizedBox(width: 50),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
