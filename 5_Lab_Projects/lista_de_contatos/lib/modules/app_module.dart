@@ -23,7 +23,9 @@ class AppModule extends Module {
     );
     r.child(
       (newContactPage),
-      child: (context) => const NewContactForm(),
+      child: (context) => NewContactForm(
+        contactListStore: Modular.get(),
+      ),
     );
   }
 }
