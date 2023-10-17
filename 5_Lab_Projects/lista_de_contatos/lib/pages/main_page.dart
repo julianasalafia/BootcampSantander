@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lista_de_contatos/helper/constants.dart';
 import '../repository/contact_repository.dart';
@@ -21,7 +22,9 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    widget.contactListStore.getContacts();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      widget.contactListStore.getContacts();
+    });
   }
 
   @override
@@ -56,85 +59,91 @@ class _MainPageState extends State<MainPage> {
                               ? const Expanded(
                                   child: Center(
                                       child: CircularProgressIndicator()))
-                              : Expanded(
-                                  child: ListView.builder(
-                                      itemCount: value.contacts.length,
-                                      itemBuilder: (context, index) {
-                                        final contact = value.contacts[index];
-                                        return Card(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                const Expanded(
-                                                  flex: 1,
-                                                  child: CircleAvatar(
-                                                    backgroundImage: AssetImage(
-                                                        'assets/empty_background.png'),
-                                                    radius: 25,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        '${contact.name}',
-                                                        style: const TextStyle(
-                                                          fontSize: 18,
-                                                        ),
+                              : value.contacts.isEmpty
+                                  ? Expanded(
+                                      child: Padding(
+                                      padding: const EdgeInsets.all(50.0),
+                                      child: Image.asset(backgroundImage),
+                                    ))
+                                  : Expanded(
+                                      child: ListView.builder(
+                                          itemCount: value.contacts.length,
+                                          itemBuilder: (context, index) {
+                                            final contact =
+                                                value.contacts[index];
+                                            return Card(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(15.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Expanded(
+                                                      flex: 1,
+                                                      child: CircleAvatar(
+                                                        backgroundImage: AssetImage(
+                                                            'assets/empty_background.png'),
+                                                        radius: 25,
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      IconButton(
-                                                        onPressed: () {},
-                                                        icon: const Icon(
-                                                            Icons.edit),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Expanded(
+                                                      flex: 3,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            '${contact.name}',
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 18,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                      IconButton(
-                                                        onPressed: () async {
-                                                          await widget
-                                                              .contactListStore
-                                                              .delete(contact
-                                                                  .objectId);
-                                                          await widget
-                                                              .contactListStore
-                                                              .getContacts();
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.delete),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          IconButton(
+                                                            onPressed: () {},
+                                                            icon: const Icon(
+                                                                Icons.edit),
+                                                          ),
+                                                          IconButton(
+                                                            onPressed:
+                                                                () async {
+                                                              await widget
+                                                                  .contactListStore
+                                                                  .delete(contact
+                                                                      .objectId);
+                                                              await widget
+                                                                  .contactListStore
+                                                                  .getContacts();
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.delete),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      }),
-                                );
+                                              ),
+                                            );
+                                          }),
+                                    );
                         }),
-                    // Expanded(
-                    //     child: Padding(
-                    //   padding: const EdgeInsets.all(50.0),
-                    //   child: Image.asset(backgroundImage),
-                    // )),
                   ],
                 ),
               ),
