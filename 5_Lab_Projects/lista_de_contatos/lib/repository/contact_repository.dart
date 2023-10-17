@@ -1,17 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:lista_de_contatos/utils/request_utils.dart';
 import '../models/new_contact_form_model.dart';
 
 class ContactRepository {
-  var _dio = Dio();
+  final _dio = Dio();
 
   ContactRepository() {
-    _dio = Dio();
-
-    _dio.options.headers['X-Parse-Application-Id'] =
-        'pJgRZxfFDD380EhaOZSeudpurl5J3sUsq0kDO5xg';
-    _dio.options.headers['X-Parse-REST-API-Key'] =
-        '5ONRHlCKM7X9gPu54LwRLlK3qHC8bejbt8EWfxfS';
-    _dio.options.headers['Content-Type'] = 'application/json';
+    _dio.options = RequestUtils.buildHeaders();
     _dio.options.baseUrl = 'https://parseapi.back4app.com/classes';
   }
 
@@ -32,6 +27,21 @@ class ContactRepository {
       print('Error: $e.');
       return [];
     }
+  }
+
+  Future<void> create(
+    String name,
+    String surname,
+    String phone,
+    String email,
+  ) async {
+    var response = await _dio.post('/Contacts', data: {
+      'name': name,
+      'surname': surname,
+      'phone': phone,
+      'email': email,
+    });
+    return response.data;
   }
 
   Future<void> delete(String objectId) async {

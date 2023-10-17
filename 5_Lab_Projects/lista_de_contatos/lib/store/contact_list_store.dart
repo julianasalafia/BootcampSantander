@@ -34,6 +34,11 @@ class ContactListStore extends ValueNotifier<ContactListState> {
     value = value.copyWith(contacts: contacts, isLoading: false);
   }
 
+  Future<void> create(
+      String name, String surname, String phone, String email) async {
+    await contactRepository.create(name, surname, phone, email);
+  }
+
   Future<void> delete(String objectId) async {
     await contactRepository.delete(objectId);
   }
