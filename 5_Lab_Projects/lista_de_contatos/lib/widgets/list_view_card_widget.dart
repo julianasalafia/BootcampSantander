@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:lista_de_contatos/helper/constants.dart';
+import 'package:lista_de_contatos/widgets/dialog_response_widget.dart';
 
 import '../models/new_contact_form_model.dart';
 import '../pages/main_page.dart';
@@ -59,8 +62,23 @@ class ListViewCardWidget extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () async {
-                      await widget.contactListStore.delete(contact.objectId);
-                      await widget.contactListStore.getContacts();
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return DialogResponseWidget(
+                              title: warningTitleDialog,
+                              description: warningDeleteMessage,
+                              onPressed: () async {
+                                Modular.to.pushNamed(mainPage);
+
+                                await widget.contactListStore
+                                    .delete(contact.objectId);
+
+                                await widget.contactListStore.getContacts();
+                              },
+                              cancelButtonText: cancelButton,
+                            );
+                          });
                     },
                     icon: const Icon(Icons.delete),
                   ),
