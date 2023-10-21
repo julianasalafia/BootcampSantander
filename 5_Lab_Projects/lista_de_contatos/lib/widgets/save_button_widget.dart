@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:lista_de_contatos/widgets/dialog_response_widget.dart';
 
 import '../helper/constants.dart';
+import '../repository/contact_repository.dart';
 import '../store/contact_list_store.dart';
 
 class SaveButtonWidget extends StatelessWidget {
   const SaveButtonWidget({
     super.key,
     required this.contactListStore,
+    required this.contactRepository,
     required this.nameController,
     required this.surnameController,
     required this.phoneController,
@@ -14,6 +18,7 @@ class SaveButtonWidget extends StatelessWidget {
   });
 
   final ContactListStore contactListStore;
+  final ContactRepository contactRepository;
   final TextEditingController nameController;
   final TextEditingController surnameController;
   final TextEditingController phoneController;
@@ -30,18 +35,48 @@ class SaveButtonWidget extends StatelessWidget {
           color: Colors.blue,
         ),
         child: TextButton(
-            onPressed: () {
+          onPressed: () {
+            if (nameController.text.isEmpty || phoneController.text.isEmpty) {
+              showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) {
+                    return DialogResponseWidget(
+                      title: warningTitleDialog,
+                      description: warningMessage,
+                      onPressed: () => Navigator.pop(context),
+                      cancelButtonText: voidMessage,
+                    );
+                  });
+            }
+
+            if (nameController.text.isNotEmpty &&
+                phoneController.text.isNotEmpty) {
               contactListStore.create(
                 nameController.text,
                 surnameController.text,
                 phoneController.text,
                 emailController.text,
               );
-            },
-            child: const Text(
-              saveButton,
-              style: TextStyle(color: Colors.white),
-            )),
+
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return DialogResponseWidget(
+                        title: successfulTitleDialog,
+                        description: successfulMessageDialog,
+                        cancelButtonText: null,
+                        onPressed: () async {
+                          await Modular.to.pushNamed(mainPage);
+                        });
+                  });
+            }
+          },
+          child: const Text(
+            saveButton,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       ),
     );
   }
