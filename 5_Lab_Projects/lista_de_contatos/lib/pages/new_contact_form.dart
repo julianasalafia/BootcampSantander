@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lista_de_contatos/helper/constants.dart';
+import 'package:lista_de_contatos/repository/contact_repository.dart';
 
 import '../store/contact_list_store.dart';
 import '../widgets/circle_avatar_picture_widget.dart';
@@ -13,8 +14,12 @@ class NewContactForm extends StatelessWidget {
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   final ContactListStore contactListStore;
+  final ContactRepository contactRepository;
 
-  NewContactForm({super.key, required this.contactListStore});
+  NewContactForm(
+      {super.key,
+      required this.contactListStore,
+      required this.contactRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +44,7 @@ class NewContactForm extends StatelessWidget {
             surnameController: surnameController,
             phoneController: phoneController,
             emailController: emailController,
+            contactRepository: contactRepository,
           ),
         ],
       ),
