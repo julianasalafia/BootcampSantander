@@ -25,6 +25,7 @@ class AppModule extends Module {
       (newContactPage),
       child: (context) => NewContactForm(
         contactListStore: Modular.get(),
+        contactRepository: Modular.get(),
       ),
     );
   }
