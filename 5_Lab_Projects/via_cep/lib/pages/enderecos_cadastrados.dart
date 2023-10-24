@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:via_cep/Model/cep_model.dart';
 import 'package:via_cep/store/enderecos_cadastrados_store.dart';
+import 'package:via_cep/utils/constants.dart';
 import '../repository/cep_repository.dart';
 
 class EnderecosCadastradosPage extends StatefulWidget {
@@ -48,7 +49,7 @@ class _EnderecosCadastradosPageState extends State<EnderecosCadastradosPage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Image.asset(
-                                      'assets/correios-busca.png',
+                                      searchImage,
                                       height: 60,
                                     ),
                                     const SizedBox(width: 20),

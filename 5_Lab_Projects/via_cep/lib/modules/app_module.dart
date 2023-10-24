@@ -3,6 +3,7 @@ import 'package:via_cep/pages/cadastro_cep_page.dart';
 import 'package:via_cep/pages/main_page.dart';
 import 'package:via_cep/repository/cep_repository.dart';
 import 'package:via_cep/store/enderecos_cadastrados_store.dart';
+import 'package:via_cep/utils/constants.dart';
 
 class AppModule extends Module {
   @override
@@ -13,12 +14,12 @@ class AppModule extends Module {
 
   @override
   void routes(r) {
-    r.child('/',
+    r.child(homePage,
         child: (context) => MainPage(
               cepRepository: Modular.get(),
               enderecosCadastradosStore: Modular.get(),
             ));
-    r.child('/editar',
+    r.child(editPage,
         child: (context) => CadastroCepPage(
               cepRepository: Modular.get(),
               cep: r.args.data,

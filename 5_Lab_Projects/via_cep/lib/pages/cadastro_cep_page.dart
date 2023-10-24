@@ -3,6 +3,9 @@ import 'package:via_cep/Model/cep_model.dart';
 import 'package:via_cep/core/formatter/cep_input_formatter.dart';
 import '../repository/cep_repository.dart';
 import '../shared/app_colors.dart';
+import '../utils/constants.dart';
+import '../widgets/image_logo_widget.dart';
+import '../widgets/text_field_widget.dart';
 
 class CadastroCepPage extends StatefulWidget {
   final CEPRepository cepRepository;
@@ -14,17 +17,18 @@ class CadastroCepPage extends StatefulWidget {
 }
 
 class _CadastroCepPageState extends State<CadastroCepPage> {
-  TextEditingController cepController = TextEditingController();
-  TextEditingController logradouroController = TextEditingController();
-  TextEditingController bairroController = TextEditingController();
-  TextEditingController cidadeController = TextEditingController();
-  TextEditingController ufController = TextEditingController();
+  final cepController = TextEditingController();
+  final streetController = TextEditingController();
+  final neighbourhoodController = TextEditingController();
+  final cityController = TextEditingController();
+  final stateController = TextEditingController();
+  final cepInputFormatter = CepInputFormatter();
   List<Cep> cepList = [];
 
-  void getListaCeps() async {
-    List<Cep> lista = await widget.cepRepository.getLista();
+  void getCepList() async {
+    List<Cep> list = await widget.cepRepository.getList();
     setState(() {
-      cepList.addAll(lista);
+      cepList.addAll(list);
     });
   }
 
@@ -35,37 +39,37 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
     if (widget.cep != null) {
       final cepUser = widget.cep;
       cepController.text = cepUser?.cep ?? '';
-      logradouroController.text = cepUser?.logradouro ?? '';
-      bairroController.text = cepUser?.bairro ?? '';
-      cidadeController.text = cepUser?.cidade ?? '';
-      ufController.text = cepUser?.estado ?? '';
+      streetController.text = cepUser?.logradouro ?? '';
+      neighbourhoodController.text = cepUser?.bairro ?? '';
+      cityController.text = cepUser?.cidade ?? '';
+      stateController.text = cepUser?.estado ?? '';
     }
-    getListaCeps();
+    getCepList();
   }
 
   void getDialogResponse({
-    required String titulo,
-    required String descricao,
+    required String title,
+    required String description,
     bool isEdit = false,
   }) {
     showDialog(
         context: context,
         builder: (_) {
           return AlertDialog(
-            title: Text(titulo),
-            content: Text(descricao),
+            title: Text(title),
+            content: Text(description),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text('Tentar novamente')),
+                  child: const Text(tryAgainMessage)),
               TextButton(
                   onPressed: () {
                     if (isEdit) Navigator.pop(context);
                     Navigator.pop(context);
                   },
-                  child: const Text('Ok')),
+                  child: const Text(confirmMessage)),
             ],
           );
         });
@@ -76,7 +80,7 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
     return Scaffold(
       appBar: widget.cep != null
           ? AppBar(
-              title: const Text('Atualizar cadastro'),
+              title: const Text(updateCepTitle),
               backgroundColor: AppColors.blue,
             )
           : null,
@@ -85,57 +89,29 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: 50.0, left: 50.0, top: 50.0, bottom: 80.0),
-                child: Image.asset('assets/correios-logo.png'),
-              ),
-              TextField(
-                inputFormatters: [
-                  CepInputFormatter(),
-                ],
-                keyboardType: TextInputType.number,
+              const ImageLogoWidget(),
+              TextFieldWidget(
                 controller: cepController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'CEP',
-                ),
+                label: labelCep,
+                cepInputFormatter: cepInputFormatter,
               ),
               const SizedBox(height: 15),
-              TextField(
-                controller: logradouroController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Logradouro'),
-              ),
+              TextFieldWidget(controller: streetController, label: labelStreet),
               const SizedBox(height: 15),
-              TextField(
-                controller: bairroController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Bairro',
-                ),
-              ),
+              TextFieldWidget(
+                  controller: neighbourhoodController,
+                  label: labelNeighbourhood),
               const SizedBox(height: 15),
               Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      controller: cidadeController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Cidade',
-                      ),
-                    ),
+                    child: TextFieldWidget(
+                        controller: cityController, label: labelCity),
                   ),
                   const SizedBox(width: 15.0),
                   Expanded(
-                    child: TextField(
-                      controller: ufController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'UF',
-                      ),
-                    ),
+                    child: TextFieldWidget(
+                        controller: stateController, label: labelState),
                   ),
                 ],
               ),
@@ -157,65 +133,48 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
 
                           if (cep.isNotEmpty && widget.cep == null) {
                             getDialogResponse(
-                              titulo: 'Falha no cadastro',
-                              descricao:
-                                  'O CEP digitado já está cadastrado na base de dados. Por favor, insira um novo CEP ou verifique os dados.',
+                              title: dialogTitleFailed,
+                              description: dialogDescriptionFailed,
                             );
                             return;
                           }
 
                           if (cepController.text.isEmpty ||
-                              logradouroController.text.isEmpty ||
-                              bairroController.text.isEmpty ||
-                              cidadeController.text.isEmpty ||
-                              ufController.text.isEmpty) {
+                              streetController.text.isEmpty ||
+                              neighbourhoodController.text.isEmpty ||
+                              cityController.text.isEmpty ||
+                              stateController.text.isEmpty) {
                             getDialogResponse(
-                              titulo: 'Aviso!',
-                              descricao:
-                                  'Preencha todos os campos para efetuar o cadastro.',
+                              title: dialogTitleWarning,
+                              description: dialogDescriptionWarning,
                             );
                             return;
                           }
 
                           if (widget.cep == null) {
-                            await widget.cepRepository.create(
-                              cepController.text,
-                              logradouroController.text,
-                              bairroController.text,
-                              cidadeController.text,
-                              ufController.text,
-                            );
+                            await createCep();
 
                             getDialogResponse(
-                              titulo: 'Sucesso',
-                              descricao:
-                                  'O CEP foi cadastrado com sucesso! Você pode agora prosseguir com as próximas etapas.',
+                              title: dialogTitleSuccess,
+                              description: dialogDescriptionSuccess,
                             );
                           } else {
-                            await widget.cepRepository.update(
-                              cep: cepController.text,
-                              logradouro: logradouroController.text,
-                              bairro: bairroController.text,
-                              cidade: cidadeController.text,
-                              estado: ufController.text,
-                              objectId: widget.cep!.objectId,
-                            );
+                            await updateCep();
 
                             getDialogResponse(
-                              titulo: 'Sucesso',
-                              descricao:
-                                  'O CEP foi atualizado com sucesso! Você pode agora prosseguir com as próximas etapas.',
+                              title: dialogTitleSuccess,
+                              description: dialogDescriptionUpdatedSuccess,
                               isEdit: true,
                             );
                           }
                           setState(() {
-                            getListaCeps();
+                            getCepList();
                           });
                         },
                         child: Text(
                           widget.cep == null
-                              ? 'Cadastrar'
-                              : 'Atualizar Cadastro',
+                              ? registerTitle
+                              : updateRegisterTitle,
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
@@ -227,6 +186,27 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> createCep() async {
+    await widget.cepRepository.create(
+      cepController.text,
+      streetController.text,
+      neighbourhoodController.text,
+      cityController.text,
+      stateController.text,
+    );
+  }
+
+  Future<void> updateCep() async {
+    await widget.cepRepository.update(
+      cep: cepController.text,
+      logradouro: streetController.text,
+      bairro: neighbourhoodController.text,
+      cidade: cityController.text,
+      estado: stateController.text,
+      objectId: widget.cep!.objectId,
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:via_cep/shared/app_colors.dart';
 import 'package:via_cep/shared/custom_drawer.dart';
 import 'package:via_cep/store/enderecos_cadastrados_store.dart';
 import '../repository/cep_repository.dart';
+import '../utils/constants.dart';
 
 class MainPage extends StatefulWidget {
   final CEPRepository cepRepository;
@@ -31,7 +32,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> onCepEdit(Cep cep) async {
-    await Modular.to.pushNamed('/editar', arguments: cep);
+    await Modular.to.pushNamed(editPage, arguments: cep);
 
     onSelectPage(0);
   }
@@ -56,13 +57,13 @@ class _MainPageState extends State<MainPage> {
 
     switch (page) {
       case 0:
-        appBarTitle = 'Página Inicial';
+        appBarTitle = mainPageTitle;
         break;
       case 1:
-        appBarTitle = 'Cadastro de Endereço';
+        appBarTitle = registerCepTitle;
         break;
       case 2:
-        appBarTitle = 'Endereços Cadastrados';
+        appBarTitle = registeredCepsTitle;
         break;
       default:
         '';
@@ -106,11 +107,11 @@ class _MainPageState extends State<MainPage> {
               },
               currentIndex: page,
               items: const [
-                BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
+                BottomNavigationBarItem(label: home, icon: Icon(Icons.home)),
                 BottomNavigationBarItem(
-                    label: 'Cadastrar', icon: Icon(Icons.app_registration)),
+                    label: register, icon: Icon(Icons.app_registration)),
                 BottomNavigationBarItem(
-                    label: 'Cadastrados', icon: Icon(Icons.apps)),
+                    label: registered, icon: Icon(Icons.apps)),
               ],
             ),
           ],

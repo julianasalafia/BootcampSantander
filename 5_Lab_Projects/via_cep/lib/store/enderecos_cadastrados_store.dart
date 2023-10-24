@@ -29,7 +29,7 @@ class EnderecosCadastradosStore
 
     await Future.delayed(const Duration(seconds: 1));
 
-    final ceps = await cepRepository.getLista();
+    final ceps = await cepRepository.getList();
     value = value.copyWith(ceps: ceps, isLoading: false);
   }
 }

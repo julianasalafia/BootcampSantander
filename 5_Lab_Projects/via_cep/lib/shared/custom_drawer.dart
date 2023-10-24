@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:via_cep/utils/constants.dart';
 
 class CustomDrawer extends StatelessWidget {
   final Function(int) onSelectedPage;
@@ -25,7 +26,7 @@ class CustomDrawer extends StatelessWidget {
                     size: 25,
                   ),
                   SizedBox(width: 10),
-                  Text('Home'),
+                  Text(home),
                 ],
               ),
             ),
@@ -46,7 +47,7 @@ class CustomDrawer extends StatelessWidget {
                       size: 25,
                     ),
                     SizedBox(width: 10),
-                    Text('Cadastrar CEP'),
+                    Text(registerCep),
                   ],
                 ),
               ),
@@ -65,7 +66,7 @@ class CustomDrawer extends StatelessWidget {
                     size: 25,
                   ),
                   SizedBox(width: 10),
-                  Text('Endereços Cadastrados'),
+                  Text(registeredCeps),
                 ],
               ),
             ),

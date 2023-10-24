@@ -19,7 +19,7 @@ class CEPRepository {
     return CepModel.fromJson(result.data);
   }
 
-  Future<List<Cep>> getLista() async {
+  Future<List<Cep>> getList() async {
     var result = await _dio.get('/CEP');
     List<dynamic> data = result.data['results'];
     return (data).map((e) => Cep.fromJson(e)).toList();
