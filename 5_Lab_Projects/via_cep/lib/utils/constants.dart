@@ -5,6 +5,8 @@ const searchImage = 'assets/correios-busca.png';
 // modular
 const homePage = '/';
 const editPage = '/editar';
+const cepInfoPage = '/info';
+const enderecosCadastradosPage = '/cadastrados';
 
 // text
 const hintCep = '00000-000';
@@ -24,6 +26,7 @@ const confirmMessage = 'Ok';
 const updateCepTitle = 'Atualizar cadastro';
 const registerTitle = 'Cadastrar';
 const updateRegisterTitle = 'Atualizar Cadastro';
+const infoCepTitle = 'Dados Cadastrados';
 
 // dialog success
 const dialogTitleSuccess = 'Sucesso';
@@ -42,6 +45,7 @@ const dialogDescriptionFailed =
 const dialogTitleWarning = 'Aviso!';
 const dialogDescriptionWarning =
     'Preencha todos os campos para efetuar o cadastro.';
+const dialogDeleteDescriptionWarning = 'Deseja realmente apagar esse CEP?';
 
 // appbar
 const mainPageTitle = 'Página Inicial';
@@ -52,3 +56,5 @@ const registeredCepsTitle = 'Endereços Cadastrados';
 const home = 'Home';
 const register = 'Cadastrar';
 const registered = 'Cadastrados';
+
+const cancelButton = 'Cancelar';

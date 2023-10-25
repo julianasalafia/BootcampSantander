@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:via_cep/Model/cep_model.dart';
 import 'package:via_cep/core/formatter/cep_input_formatter.dart';
+import 'package:via_cep/widgets/dialog_response_widget.dart';
 import '../repository/cep_repository.dart';
 import '../shared/app_colors.dart';
 import '../utils/constants.dart';
@@ -55,22 +57,16 @@ class _CadastroCepPageState extends State<CadastroCepPage> {
     showDialog(
         context: context,
         builder: (_) {
-          return AlertDialog(
-            title: Text(title),
-            content: Text(description),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(tryAgainMessage)),
-              TextButton(
-                  onPressed: () {
-                    if (isEdit) Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
-                  child: const Text(confirmMessage)),
-            ],
+          return DialogResponseWidget(
+            title: title,
+            description: description,
+            onPressed: () {
+              if (isEdit) {
+                Modular.to.pop();
+              }
+              Modular.to.popAndPushNamed(homePage);
+            },
+            cancelButtonText: '',
           );
         });
   }

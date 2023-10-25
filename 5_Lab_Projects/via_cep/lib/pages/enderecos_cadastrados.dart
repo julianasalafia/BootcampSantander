@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:via_cep/Model/cep_model.dart';
 import 'package:via_cep/store/enderecos_cadastrados_store.dart';
 import 'package:via_cep/utils/constants.dart';
+import 'package:via_cep/widgets/dialog_response_widget.dart';
 import '../repository/cep_repository.dart';
 
 class EnderecosCadastradosPage extends StatefulWidget {
@@ -39,64 +41,87 @@ class _EnderecosCadastradosPageState extends State<EnderecosCadastradosPage> {
                           itemCount: value.ceps.length,
                           itemBuilder: (context, index) {
                             final cep = value.ceps[index];
-                            return Card(
-                              elevation: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Image.asset(
-                                      searchImage,
-                                      height: 60,
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                            return GestureDetector(
+                              onTap: () {
+                                Modular.to.pushNamed(cepInfoPage,
+                                    arguments: value.ceps[index]);
+                              },
+                              child: Card(
+                                elevation: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Image.asset(
+                                        searchImage,
+                                        height: 60,
+                                      ),
+                                      const SizedBox(width: 20),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text('${cep.cep}',
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16)),
+                                            Text('${cep.cidade}',
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16)),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
                                         children: [
-                                          Text('${cep.cep}',
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16)),
-                                          Text('${cep.cidade}',
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16)),
+                                          IconButton(
+                                              onPressed: () =>
+                                                  widget.onCepEdit(cep),
+                                              icon: const Icon(
+                                                Icons.edit,
+                                                color: Colors.grey,
+                                              )),
+                                          IconButton(
+                                              onPressed: () async {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) {
+                                                      return DialogResponseWidget(
+                                                        title:
+                                                            dialogTitleWarning,
+                                                        description:
+                                                            dialogDeleteDescriptionWarning,
+                                                        onPressed: () async {
+                                                          await widget
+                                                              .cepRepository
+                                                              .delete(
+                                                                  cep.objectId);
+
+                                                          setState(() {
+                                                            widget
+                                                                .enderecosCadastradosStore
+                                                                .getCeps();
+                                                          });
+                                                        },
+                                                        cancelButtonText:
+                                                            cancelButton,
+                                                      );
+                                                    });
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.grey,
+                                              )),
                                         ],
                                       ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                            onPressed: () =>
-                                                widget.onCepEdit(cep),
-                                            icon: const Icon(
-                                              Icons.edit,
-                                              color: Colors.grey,
-                                            )),
-                                        IconButton(
-                                            onPressed: () async {
-                                              await widget.cepRepository
-                                                  .delete(cep.objectId);
-
-                                              setState(() {
-                                                widget.enderecosCadastradosStore
-                                                    .getCeps();
-                                              });
-                                            },
-                                            icon: const Icon(
-                                              Icons.delete,
-                                              color: Colors.grey,
-                                            )),
-                                      ],
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
