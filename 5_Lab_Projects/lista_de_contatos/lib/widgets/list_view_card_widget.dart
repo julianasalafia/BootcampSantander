@@ -19,6 +19,10 @@ class ListViewCardWidget extends StatelessWidget {
   final Contact contact;
   final MainPage widget;
 
+  Future<void> onContactEdit(Contact contact) async {
+    await Modular.to.pushNamed(editContactPage, arguments: contact);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -57,7 +61,7 @@ class ListViewCardWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => onContactEdit(contact),
                     icon: const Icon(Icons.edit),
                   ),
                   IconButton(

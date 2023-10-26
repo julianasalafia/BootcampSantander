@@ -36,7 +36,28 @@ class ContactListStore extends ValueNotifier<ContactListState> {
 
   Future<void> create(
       String name, String surname, String phone, String email) async {
-    await contactRepository.create(name, surname, phone, email);
+    await contactRepository.create(
+      name,
+      surname,
+      phone,
+      email,
+    );
+  }
+
+  Future<void> update(
+    String name,
+    String surname,
+    String phone,
+    String email,
+    String objectId,
+  ) async {
+    await contactRepository.update(
+      name,
+      surname,
+      phone,
+      email,
+      objectId: objectId,
+    );
   }
 
   Future<void> delete(String objectId) async {

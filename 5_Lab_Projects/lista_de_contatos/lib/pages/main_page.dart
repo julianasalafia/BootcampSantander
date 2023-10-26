@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lista_de_contatos/helper/constants.dart';
 import '../repository/contact_repository.dart';
 import '../store/contact_list_store.dart';
@@ -46,27 +47,35 @@ class _MainPageState extends State<MainPage> {
                 child: Column(
                   children: [
                     ValueListenableBuilder(
-                        valueListenable: widget.contactListStore,
-                        builder: (context, value, child) {
-                          return value.isLoading
-                              ? const CircularCenterProgressWidget()
-                              : value.contacts.isEmpty
-                                  ? const EmptyBackgroundWidget()
-                                  : Expanded(
-                                      child: ListView.builder(
-                                          itemCount: value.contacts.length,
-                                          itemBuilder: (context, index) {
-                                            final contact =
-                                                value.contacts[index];
-                                            return ListViewCardWidget(
+                      valueListenable: widget.contactListStore,
+                      builder: (context, value, child) {
+                        return value.isLoading
+                            ? const CircularCenterProgressWidget()
+                            : value.contacts.isEmpty
+                                ? const EmptyBackgroundWidget()
+                                : Expanded(
+                                    child: ListView.builder(
+                                        itemCount: value.contacts.length,
+                                        itemBuilder: (context, index) {
+                                          final contact = value.contacts[index];
+                                          return GestureDetector(
+                                            onTap: () {
+                                              Modular.to.pushNamed(
+                                                  contactInfoPage,
+                                                  arguments:
+                                                      value.contacts[index]);
+                                            },
+                                            child: ListViewCardWidget(
                                               contact: contact,
                                               widget: widget,
                                               profilePicture:
                                                   'assets/empty_background.png',
-                                            );
-                                          }),
-                                    );
-                        }),
+                                            ),
+                                          );
+                                        }),
+                                  );
+                      },
+                    ),
                   ],
                 ),
               ),

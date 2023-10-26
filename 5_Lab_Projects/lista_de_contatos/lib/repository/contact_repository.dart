@@ -44,6 +44,22 @@ class ContactRepository {
     return response.data;
   }
 
+  Future<void> update(
+    String name,
+    String surname,
+    String phone,
+    String email, {
+    required String objectId,
+  }) async {
+    var response = await _dio.put('/Contacts/$objectId', data: {
+      'name': name,
+      'surname': surname,
+      'phone': phone,
+      'email': email,
+    });
+    return response.data;
+  }
+
   Future<void> delete(String objectId) async {
     try {
       await _dio.delete('/Contacts/$objectId');
