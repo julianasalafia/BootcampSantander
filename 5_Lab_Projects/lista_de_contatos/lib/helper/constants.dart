@@ -1,10 +1,13 @@
 // titles
 const appBarTitle = 'Contacts';
 const newContactTitle = 'Create contact';
+const contactTitle = 'Contact';
 
 // pages
 const mainPage = '/';
 const newContactPage = '/newcontact';
+const editContactPage = '/editcontact';
+const contactInfoPage = '/contactinfo';
 
 // buttons
 const saveButton = 'Save';
@@ -30,6 +33,7 @@ const warningDeleteMessage = 'Are you sure you want to delete this contact?';
 
 const successfulTitleDialog = 'Success!';
 const successfulMessageDialog = 'Contact successfully registered!';
+const successfulUpdatedMessageDialog = 'Contact successfully updated!';
 
 const successfulDeleteTitleDialog = 'Done!';
 const successfulDeleteMessageDialog = 'Contact successfully deleted!';
