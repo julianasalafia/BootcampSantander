@@ -2,7 +2,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lista_de_contatos/helper/constants.dart';
 import 'package:lista_de_contatos/pages/contact_info_page.dart';
 import 'package:lista_de_contatos/pages/main_page.dart';
-import 'package:lista_de_contatos/pages/new_contact_form.dart';
+import 'package:lista_de_contatos/pages/new_contact_form_page.dart';
 import 'package:lista_de_contatos/repository/contact_repository.dart';
 import 'package:lista_de_contatos/store/contact_list_store.dart';
 
@@ -24,7 +24,7 @@ class AppModule extends Module {
     );
     r.child(
       (newContactPage),
-      child: (context) => NewContactForm(
+      child: (context) => NewContactFormPage(
         contactListStore: Modular.get(),
         contactRepository: Modular.get(),
       ),
@@ -37,7 +37,7 @@ class AppModule extends Module {
     );
     r.child(
       (editContactPage),
-      child: (context) => NewContactForm(
+      child: (context) => NewContactFormPage(
         contactListStore: Modular.get(),
         contactRepository: Modular.get(),
         contact: r.args.data,
