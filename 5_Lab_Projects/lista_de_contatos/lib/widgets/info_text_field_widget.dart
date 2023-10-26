@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class InfoTextFieldWidget extends StatelessWidget {
   final String hint;
+  final Icon icon;
 
   const InfoTextFieldWidget({
     super.key,
     required this.controller,
     required this.hint,
+    required this.icon,
   });
 
   final TextEditingController controller;
@@ -18,7 +20,7 @@ class InfoTextFieldWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Icon(Icons.person_outline),
+          icon,
           const SizedBox(width: 15),
           Expanded(
             child: TextField(

@@ -3,23 +3,34 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lista_de_contatos/helper/constants.dart';
 import 'package:lista_de_contatos/repository/contact_repository.dart';
 
+import '../models/new_contact_form_model.dart';
 import '../store/contact_list_store.dart';
 import '../widgets/circle_avatar_picture_widget.dart';
 import '../widgets/info_text_field_widget.dart';
 import '../widgets/save_button_widget.dart';
 
-class NewContactForm extends StatelessWidget {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController surnameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+class NewContactFormPage extends StatelessWidget {
+  final nameController = TextEditingController();
+  final surnameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
   final ContactListStore contactListStore;
   final ContactRepository contactRepository;
+  final Contact? contact;
 
-  NewContactForm(
-      {super.key,
-      required this.contactListStore,
-      required this.contactRepository});
+  NewContactFormPage({
+    super.key,
+    required this.contactListStore,
+    required this.contactRepository,
+    this.contact,
+  }) {
+    if (contact != null) {
+      nameController.text = contact?.name ?? '';
+      surnameController.text = contact?.surname ?? '';
+      phoneController.text = contact?.phone ?? '';
+      emailController.text = contact?.email ?? '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +56,7 @@ class NewContactForm extends StatelessWidget {
             phoneController: phoneController,
             emailController: emailController,
             contactRepository: contactRepository,
+            objectId: contact?.objectId,
           ),
         ],
       ),
@@ -53,7 +65,8 @@ class NewContactForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 25.0, horizontal: 15.0),
               child: Column(
                 children: [
                   CircleAvatarPictureWidget(),
@@ -67,10 +80,33 @@ class NewContactForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 15),
-            InfoTextFieldWidget(controller: nameController, hint: name),
-            InfoTextFieldWidget(controller: surnameController, hint: surname),
-            InfoTextFieldWidget(controller: phoneController, hint: phone),
-            InfoTextFieldWidget(controller: emailController, hint: email),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Column(
+                children: [
+                  InfoTextFieldWidget(
+                    controller: nameController,
+                    hint: name,
+                    icon: const Icon(Icons.person_outline),
+                  ),
+                  InfoTextFieldWidget(
+                    controller: surnameController,
+                    hint: surname,
+                    icon: const Icon(Icons.person_outline),
+                  ),
+                  InfoTextFieldWidget(
+                    controller: phoneController,
+                    hint: phone,
+                    icon: const Icon(Icons.phone_outlined),
+                  ),
+                  InfoTextFieldWidget(
+                    controller: emailController,
+                    hint: email,
+                    icon: const Icon(Icons.email_outlined),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
