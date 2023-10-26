@@ -7,6 +7,14 @@ import '../repository/contact_repository.dart';
 import '../store/contact_list_store.dart';
 
 class SaveButtonWidget extends StatelessWidget {
+  final ContactListStore contactListStore;
+  final ContactRepository contactRepository;
+  final TextEditingController nameController;
+  final TextEditingController surnameController;
+  final TextEditingController phoneController;
+  final TextEditingController emailController;
+  final String? objectId;
+
   const SaveButtonWidget({
     super.key,
     required this.contactListStore,
@@ -15,14 +23,8 @@ class SaveButtonWidget extends StatelessWidget {
     required this.surnameController,
     required this.phoneController,
     required this.emailController,
+    this.objectId,
   });
-
-  final ContactListStore contactListStore;
-  final ContactRepository contactRepository;
-  final TextEditingController nameController;
-  final TextEditingController surnameController;
-  final TextEditingController phoneController;
-  final TextEditingController emailController;
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +54,46 @@ class SaveButtonWidget extends StatelessWidget {
 
             if (nameController.text.isNotEmpty &&
                 phoneController.text.isNotEmpty) {
-              contactListStore.create(
-                nameController.text,
-                surnameController.text,
-                phoneController.text,
-                emailController.text,
-              );
+              if (objectId != null) {
+                contactListStore.update(
+                  nameController.text,
+                  surnameController.text,
+                  phoneController.text,
+                  emailController.text,
+                  objectId!,
+                );
 
-              showDialog(
-                  context: context,
-                  builder: (_) {
-                    return DialogResponseWidget(
-                        title: successfulTitleDialog,
-                        description: successfulMessageDialog,
-                        cancelButtonText: null,
-                        onPressed: () async {
-                          await Modular.to.pushNamed(mainPage);
-                        });
-                  });
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return DialogResponseWidget(
+                          title: successfulTitleDialog,
+                          description: successfulUpdatedMessageDialog,
+                          cancelButtonText: null,
+                          onPressed: () async {
+                            await Modular.to.pushNamed(mainPage);
+                          });
+                    });
+              } else {
+                contactListStore.create(
+                  nameController.text,
+                  surnameController.text,
+                  phoneController.text,
+                  emailController.text,
+                );
+
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return DialogResponseWidget(
+                          title: successfulTitleDialog,
+                          description: successfulMessageDialog,
+                          cancelButtonText: null,
+                          onPressed: () async {
+                            await Modular.to.pushNamed(mainPage);
+                          });
+                    });
+              }
             }
           },
           child: const Text(
