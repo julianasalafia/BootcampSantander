@@ -1,12 +1,16 @@
+import 'package:desafio_imc/model/person_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-import '../imc.dart';
-import '../pessoa.dart';
 import '../shared/app_colors.dart';
+import '../shared/constants.dart';
 
-class PageResults extends StatelessWidget {
-  final Map<Pessoa, IMC> pessoasIMC;
-  const PageResults({super.key, required this.pessoasIMC});
+class ResultsPage extends StatelessWidget {
+  List<PersonModel> persons = [];
+  ResultsPage({
+    super.key,
+    required this.persons,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +29,7 @@ class PageResults extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-              children: pessoasIMC.entries.map((entry) {
-                Pessoa pessoa = entry.key;
-                IMC imc = entry.value;
+              children: persons.map((person) {
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 15.0),
@@ -38,7 +40,9 @@ class PageResults extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Modular.to.pushNamed(singlePersonResultPage);
+                    },
                     child: ListTile(
                       leading: const Icon(
                         Icons.person_rounded,
@@ -46,12 +50,12 @@ class PageResults extends StatelessWidget {
                       ),
                       iconColor: AppColors.rosaTrio,
                       title: Text(
-                        pessoa.nome.toString(),
+                        person.name.toString(),
                         style: const TextStyle(
                             color: Colors.black54, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                          'Peso: ${pessoa.peso.toString()}, Altura: ${pessoa.altura!.toStringAsFixed(0)}, IMC: ${imc.imc!.toStringAsFixed(1)}'),
+                          'Peso: ${person.weight.toString()}, Altura: ${person.height!}, IMC: ${person.imc!.toStringAsFixed(1)}'),
                     ),
                   ),
                 );

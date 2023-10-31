@@ -1,12 +1,7 @@
-import 'package:desafio_imc/pessoa.dart';
-import 'package:desafio_imc/shared/constants.dart';
+import 'package:desafio_imc/shared/categoria_imc.dart';
 
-class IMC extends Pessoa {
+class IMC {
   double? _imc;
-
-  IMC(Pessoa pessoa) : super(pessoa.nome, pessoa.peso, pessoa.altura) {
-    _imc = calculateIMC(pessoa.peso, pessoa.altura);
-  }
 
   double? get imc => _imc;
 
@@ -14,12 +9,7 @@ class IMC extends Pessoa {
     _imc = imc!;
   }
 
-  double calculateIMC(double? peso, double? altura) {
-    double alturaEmMetros = altura! / 100;
-    return peso! / (alturaEmMetros! * alturaEmMetros);
-  }
-
-  String getDescricaoCategoriaIMC(CategoriaIMC categoria) {
+  static String getDescricaoCategoriaIMC(CategoriaIMC categoria) {
     switch (categoria) {
       case CategoriaIMC.magrezaGrave:
         return 'magreza grave';
@@ -42,9 +32,7 @@ class IMC extends Pessoa {
     }
   }
 
-  CategoriaIMC getCategoriaIMC(IMC pessoa) {
-    double imc = pessoa.imc!;
-
+  static CategoriaIMC getCategoriaIMC(double imc) {
     if (imc < 16) {
       return CategoriaIMC.magrezaGrave;
     } else if (imc < 17) {
@@ -62,6 +50,11 @@ class IMC extends Pessoa {
     } else {
       return CategoriaIMC.obesidadeGrauIII;
     }
+  }
+
+  static double calculateIMC({required double height, required double weight}) {
+    double heightInMeters = height / 100;
+    return weight / (heightInMeters * heightInMeters);
   }
 
   @override

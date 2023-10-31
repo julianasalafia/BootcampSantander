@@ -1,10 +1,11 @@
+import 'package:desafio_imc/model/person_model.dart';
 import 'package:flutter/material.dart';
+
 import '../imc.dart';
-import '../pessoa.dart';
 import '../shared/app_colors.dart';
 
 class FloatingActionButtonWidget extends StatefulWidget {
-  Map<Pessoa, IMC> setPessoasIMC = {};
+  Map<Person, IMC> setPessoasIMC = {};
   Widget page;
 
   FloatingActionButtonWidget({super.key, required this.page});

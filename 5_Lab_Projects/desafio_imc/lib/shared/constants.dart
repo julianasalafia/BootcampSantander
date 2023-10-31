@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
-enum CategoriaIMC {
-  magrezaGrave,
-  magrezaModerada,
-  magrezaLeve,
-  saudavel,
-  sobrepeso,
-  obesidadeGrauI,
-  obesidadeGrauII,
-  obesidadeGrauIII
-}
-
 const height = 10.0;
 const width = 15.0;
+
+const homePage = '/';
+const resultsPage = '/resultados';
+const singlePersonResultPage = '/dadospessoa';
 
 const kTextTitleStyle = TextStyle(
   fontFamily: 'Modak',
@@ -83,26 +75,6 @@ TextStyle kBorderTextStyle = TextStyle(
     ..strokeWidth = 2
     ..color = AppColors.vinho,
 );
-
-TextField buildTextField(
-    {required TextEditingController controller, required String hintText}) {
-  return TextField(
-    controller: controller,
-    decoration: InputDecoration(
-      hintText: hintText,
-      border: buildOutlineInputBorder(),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(50.0),
-        borderSide: const BorderSide(color: AppColors.rosaDuo, width: 4),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(50.0),
-        borderSide: const BorderSide(color: AppColors.rosaTrio, width: 4),
-      ),
-    ),
-    textAlign: TextAlign.center,
-  );
-}
 
 OutlineInputBorder buildOutlineInputBorder() {
   return OutlineInputBorder(
