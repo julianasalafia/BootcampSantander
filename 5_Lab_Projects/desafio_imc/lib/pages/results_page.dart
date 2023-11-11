@@ -37,11 +37,14 @@ class ResultsPage extends StatelessWidget {
                     style: TextButton.styleFrom(
                       backgroundColor: AppColors.rosa,
                       shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
                       ),
                     ),
                     onPressed: () {
-                      Modular.to.pushNamed(singlePersonResultPage);
+                      Modular.to
+                          .pushNamed(singlePersonResultPage, arguments: person);
                     },
                     child: ListTile(
                       leading: const Icon(
@@ -55,7 +58,7 @@ class ResultsPage extends StatelessWidget {
                             color: Colors.black54, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                          'Peso: ${person.weight.toString()}, Altura: ${person.height!}, IMC: ${person.imc!.toStringAsFixed(1)}'),
+                          'Peso: ${person.weight.toString()}, Altura: ${person.height!}, IMC: ${person.imc.toStringAsFixed(1)}'),
                     ),
                   ),
                 );

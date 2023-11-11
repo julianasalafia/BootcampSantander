@@ -2,7 +2,6 @@ import 'package:desafio_imc/pages/home_page.dart';
 import 'package:desafio_imc/pages/results_page.dart';
 import 'package:desafio_imc/pages/single_person_result_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
 import '../shared/constants.dart';
 
 class AppModule extends Module {
@@ -23,7 +22,9 @@ class AppModule extends Module {
     );
     r.child(
       singlePersonResultPage,
-      child: (context) => const SinglePersonResultPage(),
+      child: (context) => SinglePersonResultPage(
+        person: r.args.data,
+      ),
     );
   }
 }

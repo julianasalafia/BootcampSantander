@@ -233,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       primary: false,
-                      itemCount: persons.length,
+                      itemCount: 3,
                       itemBuilder: (context, index) {
                         final person = persons[index];
                         return Column(
