@@ -9,5 +9,10 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('result');
 
-  runApp(ModularApp(module: AppModule(), child: const AppWidget()));
+  runApp(
+    ModularApp(
+      module: AppModule(),
+      child: const AppWidget(),
+    ),
+  );
 }

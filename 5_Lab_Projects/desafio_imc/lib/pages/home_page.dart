@@ -42,8 +42,7 @@ class _HomePageState extends State<HomePage> {
 
   ShowSnackBarWidget showSnackBarWidget = ShowSnackBarWidget();
 
-  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-      GlobalKey<ScaffoldMessengerState>();
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   void initState() {
@@ -55,33 +54,23 @@ class _HomePageState extends State<HomePage> {
   void loadData() async {
     final storage = await SharedPreferences.getInstance();
     setState(() {
-      nameUser = storage.getString(CHAVE_NOME_USUARIO)!;
-      heightUser = storage.getDouble(CHAVE_ALTURA_USUARIO)!;
+      nameUser = storage.getString(CHAVE_NOME_USUARIO) ?? '';
+      heightUser = storage.getDouble(CHAVE_ALTURA_USUARIO) ?? 0.0;
     });
-    nameController.text = nameUser!;
+    nameController.text = nameUser ?? '';
     heightController.text = heightUser.toString();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        textTheme: GoogleFonts.openSansTextTheme(
-          Theme.of(context).textTheme,
-        ),
-      ),
       scaffoldMessengerKey: scaffoldMessengerKey,
       home: Builder(
         builder: (context) => Scaffold(
-          backgroundColor: AppColors.rosa,
-          appBar: AppBar(
-            backgroundColor: AppColors.rosaDuo,
-            elevation: 0,
-          ),
+          appBar: AppBar(),
           body: SingleChildScrollView(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
+              padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -149,10 +138,8 @@ class _HomePageState extends State<HomePage> {
                       });
 
                       weightController.clear();
-                      storage.setString(
-                          CHAVE_NOME_USUARIO, nameController.text);
-                      storage.setDouble(CHAVE_ALTURA_USUARIO,
-                          double.parse(heightController.text));
+                      storage.setString(CHAVE_NOME_USUARIO, nameController.text);
+                      storage.setDouble(CHAVE_ALTURA_USUARIO, double.parse(heightController.text));
                     },
                   ),
                   const SizedBox(height: height),
@@ -168,10 +155,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Text(
                               imcText,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Modak',
-                                  fontSize: 50.0),
+                              style: const TextStyle(color: Colors.white, fontFamily: 'Modak', fontSize: 50.0),
                             ),
                           ],
                         ),
@@ -233,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       primary: false,
-                      itemCount: 3,
+                      itemCount: persons.length < 3 ? persons.length : 3,
                       itemBuilder: (context, index) {
                         final person = persons[index];
                         return Column(
@@ -242,9 +226,7 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Expanded(flex: 3, child: Text(person.name)),
                                 Expanded(flex: 2, child: Text(person.weight!)),
-                                Expanded(
-                                    flex: 2,
-                                    child: Text(person.imc.toStringAsFixed(1))),
+                                Expanded(flex: 2, child: Text(person.imc.toStringAsFixed(1))),
                                 Expanded(flex: 2, child: Text(person.status)),
                               ],
                             ),
